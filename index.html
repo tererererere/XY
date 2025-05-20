@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina con Laboratorio Oscilloscopio Integrato</title>
+    <style>
+        body {
+            font-family: monospace, sans-serif; background-color: #111; color: #00a85e;
+            display: flex; flex-direction: column; align-items: center; padding: 15px; margin: 0;
+        }
+        .titolo-pagina-principale {
+            text-align: left; color: #00c698; font-family: monospace, sans-serif;
+            font-size: 1.8rem; margin-bottom: 25px; margin-top: 0; font-weight: normal;
+            padding-left: 20px; padding-right: 20px; width:100%; box-sizing: border-box;
+        }
+        .navigazione-principale {
+            padding: 0 20px 15px 20px; 
+            position: relative; z-index: 1; width:100%; box-sizing: border-box;
+             border-bottom: 1px solid #003e28; margin-bottom:20px;
+        }
+        .menu { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap:wrap; }
+        .voce-menu { margin-right: 20px; margin-bottom: 5px; }
+        .voce-menu:last-child { margin-right: 0; }
+        .titolo-espandibile {
+            text-decoration: none; color: #00a85e; padding: 8px 12px; position: relative;
+            transition: color 0.3s ease, background-color 0.3s ease; display: inline-block;
+            cursor: pointer; border-radius: 3px;
+        }
+        .titolo-espandibile:hover { color: #00c698; background-color: #222; }
+        .titolo-espandibile.attivo { color: #00f0a0; background-color: #2a2a2a; }
+        .titolo-espandibile::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 1px;
+            background-color: #00a85e; transform: scaleX(0); transform-origin: left;
+            transition: transform 0.3s ease-in-out;
+        }
+        .titolo-espandibile:hover::before, .titolo-espandibile.attivo::before { transform: scaleX(1); }
+        .effetto-laser {
+            position: absolute; bottom: 0; left: 0; width: 0%; height: 1px;
+            background-color: #00c698; transition: width 0.5s ease-in-out;
+        }
+        .contenitore-dati-nascosto { display: none; }
+        .area-contenuto-visibile {
+            display: none; padding: 20px; margin: 0 20px 20px 20px;
+            color: #ccc; line-height: 1.7; max-width: 860px;
+            width: calc(100% - 40px); box-sizing: border-box;
+        }
+        .area-contenuto-visibile.visibile { display: block; }
+        .area-contenuto-visibile h2 {
+            color: #00c698; margin-top: 0; border-bottom: 1px solid #005337;
+            padding-bottom: 10px; font-size: 1.6rem;
+            font-weight: normal; text-align: left;
+        }
+        .testo-introduttivo p { margin-bottom: 1.2em; text-align: justify; }
+        .testo-introduttivo .citazione-fonte {
+            font-style: italic; font-size: 0.9em; text-align: right; color: #888; margin-top: 20px;
+        }
+
+        #area-testo-dinamico .lab-titolo-principale {
+             font-size: 1.6rem; color: #00c698; text-align: center; margin-bottom: 15px;
+        }
+        #area-testo-dinamico .controlli-forms-container-lab {
+            display: flex; flex-direction: column; gap: 10px; padding: 10px 15px;
+            background-color: #222; border-radius: 5px; border: 1px solid #003e28; margin-bottom: 15px;
+        }
+        #area-testo-dinamico .riga-controlli-lab {
+            display: flex; gap: 15px; align-items: center; justify-content: center; flex-wrap: wrap;
+        }
+        #area-testo-dinamico .controlli-forms-container-lab label { margin-right: 5px; color: #00a85e;}
+        #area-testo-dinamico .controlli-forms-container-lab select, 
+        #area-testo-dinamico .controlli-forms-container-lab input[type="range"], 
+        #area-testo-dinamico .controlli-forms-container-lab button,
+        #area-testo-dinamico .controlli-forms-container-lab input[type="checkbox"] {
+            background-color: #333; color: #00a85e; border: 1px solid #005337;
+            padding: 8px; border-radius: 3px; font-family: monospace, sans-serif; vertical-align: middle;
+            cursor: pointer;
+        }
+        #area-testo-dinamico .controlli-forms-container-lab input[type="range"] { padding: 0; width: 120px;}
+        #area-testo-dinamico .controlli-forms-container-lab button:hover { background-color: #005337; }
+        #area-testo-dinamico .controllo-opzione-lab { display: flex; align-items: center; gap: 5px; color: #00a85e;}
+        #area-testo-dinamico .controllo-opzione-lab input[type="checkbox"] { width: 15px; height: 15px; }
+
+        #area-testo-dinamico .contenitore-principale-lab {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            align-items: flex-start; gap: 15px; width: 100%;
+        }
+        #area-testo-dinamico .colonna-visualizzazione-lab {
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
+            padding: 10px; background-color: #1a1a1a; border-radius: 4px; border: 1px solid #003020;
+        }
+        #area-testo-dinamico .colonna-visualizzazione-lab h3 { font-size: 1.1rem; margin-bottom:5px;}
+        #area-testo-dinamico canvas { border: 1px solid #005337; background-color: #000; }
+        #area-testo-dinamico #formaCanvasLab { width: 280px; height: 280px; }
+        #area-testo-dinamico .canvas-segnale-lab { width: 300px; height: 70px; position: relative;}
+        
+        #area-testo-dinamico .info-forma-lab, #area-testo-dinamico .info-valori-istantanei-lab {
+            font-size: 0.85em; color: #ccc; width: 100%;
+            padding: 5px; box-sizing: border-box; text-align:center;
+        }
+        #area-testo-dinamico .info-forma-lab p, #area-testo-dinamico .info-valori-istantanei-lab p { margin: 2px 0;}
+        #area-testo-dinamico .info-valori-istantanei-lab span { color: #00ff99; font-weight: bold; }
+
+        #area-testo-dinamico .spiegazione-generale-lab {
+            margin-top: 20px; padding: 15px; width:100%; box-sizing:border-box;
+            background-color: #1f1f1f; border: 1px solid #003e28; border-radius: 4px;
+            color: #bbb; line-height: 1.5; font-size: 0.85em;
+        }
+        #area-testo-dinamico .cursore-segnale-lab {
+            position: absolute; top: 0; bottom: 0; width: 2px;
+            background-color: rgba(255, 0, 0, 0.7); display: none;
+        }
+        #area-testo-dinamico .valore-tooltip-lab {
+            position: absolute; background-color: rgba(0,0,0,0.7); color: white;
+            padding: 2px 5px; font-size: 0.8em; border-radius: 3px;
+            display: none; transform: translateY(-100%); pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="titolo-pagina-principale">Esplorazioni Sonore e Visive</h1>
+
+    <nav class="navigazione-principale">
+        <ul class="menu">
+            <li class="voce-menu">
+                <a href="#" class="titolo-espandibile" data-target="contenuto-suono">che cos'è il suono?</a>
+            </li>
+            <li class="voce-menu">
+                <a href="#" class="titolo-espandibile" data-target="contenuto-esperimenti">esperimenti</a>
+            </li>
+            <li class="voce-menu">
+                <a href="#" class="titolo-espandibile" data-target="contenuto-onde-complesse">onde complesse e visualizzazione</a>
+            </li>
+            <li class="voce-menu">
+                <a href="#" class="titolo-espandibile" data-target="contenuto-laboratorio-oscilloscopio">oscilloscopio</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="area-testo-dinamico" class="area-contenuto-visibile visibile">
+        <div class="testo-introduttivo">
+            <p>Visualizzare il suono significa dare forma visiva a qualcosa che normalmente percepiamo solo con l’udito, "Ottenere una forma dal suono" significa trasformare l’energia acustica in dati numerici, e usare quei numeri per generare grafica dinamica. Il suono non “diventa” direttamente una forma: è il codice a costruire un ponte tra audio e immagine.</p>
+            <p class="citazione-fonte">“Le forme prodotte dalle vibrazioni non sono solo curiosità della natura, ma chiavi per comprenderne l’armonia nascosta.”<br>— parafrasi da "Entdeckungen über die Theorie des Klanges" (1787)</p>
+        </div>
+    </div>
+
+    <div id="contenuto-suono" class="contenitore-dati-nascosto">
+        <h2>Che cos'è il suono?</h2>
+        <p>Il suono è una perturbazione meccanica...</p>
+        <p><em>(Il tuo approfondimento completo qui...)</em></p>
+    </div>
+    <div id="contenuto-esperimenti" class="contenitore-dati-nascosto">
+        <h2>Esperimenti sul Suono</h2>
+        <p>Esistono numerosi esperimenti affascinanti...</p>
+        <p><em>(Il tuo approfondimento completo qui...)</em></p>
+    </div>
+    <div id="contenuto-onde-complesse" class="contenitore-dati-nascosto">
+        <h2>Onde Complesse e Visualizzazione</h2>
+        <p>La maggior parte dei suoni che sentiamo...</p>
+        <p><em>(Il tuo approfondimento completo qui...)</em></p>
+    </div>
+
+    <div id="contenuto-laboratorio-oscilloscopio" class="contenitore-dati-nascosto">
+        <h2 class="lab-titolo-principale">Laboratorio Oscilloscopio Dinamico</h2>
+        <div class="controlli-forms-container-lab">
+            <div class="riga-controlli-lab">
+                <label for="labSelezionaForma">Scegli forma:</label>
+                <select id="labSelezionaForma">
+                    <option value="quadrato">Quadrato</option>
+                    <option value="triangolo">Triangolo</option>
+                    <option value="stella">Stella (5 punte)</option>
+                    <option value="cerchio">Cerchio</option>
+                    <option value="rampa_x">Rampa X</option>
+                    <option value="rampa_y">Rampa Y</option>
+                </select>
+                <label for="labVelocitaTracciamento">Velocità:</label>
+                <input type="range" id="labVelocitaTracciamento" min="1" max="80" value="10">
+                <button id="labPausaPlayBtn">Pausa</button>
+            </div>
+            <div class="riga-controlli-lab">
+                <div class="controllo-opzione-lab">
+                    <input type="checkbox" id="labTogglePianoCartesiano" checked>
+                    <label for="labTogglePianoCartesiano">Mostra Piano Cartesiano</label>
+                </div>
+            </div>
+        </div>
+        <div class="contenitore-principale-lab">
+            <div class="colonna-visualizzazione-lab">
+                <h3>Forma (X-Y)</h3>
+                <canvas id="formaCanvasLab"></canvas>
+                <div id="labInfoForma" class="info-forma-lab">
+                    <p id="labDescrizioneForma"></p>
+                    <p>Campioni Totali: <span id="labNumCampioniVal">N/D</span></p>
+                    <p>Freq. Ripetizione: <span id="labFreqRipetizioneVal">N/D</span> Hz</p>
+                </div>
+            </div>
+            <div class="colonna-visualizzazione-lab">
+                <h3>Segnale $V_x(t)$</h3>
+                <div style="position:relative;">
+                     <canvas id="labSegnaleXCanvas" class="canvas-segnale-lab"></canvas>
+                     <div id="labCursoreX" class="cursore-segnale-lab"></div>
+                     <div id="labTooltipX" class="valore-tooltip-lab"></div>
+                </div>
+                <h3>Segnale $V_y(t)$</h3>
+                 <div style="position:relative;">
+                    <canvas id="labSegnaleYCanvas" class="canvas-segnale-lab"></canvas>
+                    <div id="labCursoreY" class="cursore-segnale-lab"></div>
+                    <div id="labTooltipY" class="valore-tooltip-lab"></div>
+                </div>
+                <div class="info-valori-istantanei-lab">
+                    <p>$V_x$ attuale: <span id="labVxValIstantaneo">N/D</span></p>
+                    <p>$V_y$ attuale: <span id="labVyValIstantaneo">N/D</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="spiegazione-generale-lab">
+            <p>Seleziona una forma. La traccia svanisce gradualmente. Usa "Pausa"/"Riparti" e "Velocità" per controllare l'animazione. Il checkbox attiva/disattiva il piano cartesiano.</p>
+        </div>
+    </div>
+
+    <script>
+        let idAnimazioneLaboratorio = null;
+        
+        function inizializzaLaboratorioOscilloscopio() {
+            if (idAnimazioneLaboratorio) {
+                cancelAnimationFrame(idAnimazioneLaboratorio);
+                idAnimazioneLaboratorio = null;
+            }
+
+            const formaCanvas = document.getElementById('formaCanvasLab');
+            if (!formaCanvas) { return null; }
+            const ctxForma = formaCanvas.getContext('2d');
+            const segnaleXCanvas = document.getElementById('labSegnaleXCanvas');
+            const ctxSegnaleX = segnaleXCanvas ? segnaleXCanvas.getContext('2d') : null;
+            const segnaleYCanvas = document.getElementById('labSegnaleYCanvas');
+            const ctxSegnaleY = segnaleYCanvas ? segnaleYCanvas.getContext('2d') : null;
+            const cursoreX = document.getElementById('labCursoreX');
+            const cursoreY = document.getElementById('labCursoreY');
+            const tooltipX = document.getElementById('labTooltipX');
+            const tooltipY = document.getElementById('labTooltipY');
+            const selectForma = document.getElementById('labSelezionaForma');
+            const sliderVelocita = document.getElementById('labVelocitaTracciamento');
+            const pausaPlayBtn = document.getElementById('labPausaPlayBtn');
+            const checkboxPianoCartesiano = document.getElementById('labTogglePianoCartesiano');
+            const descrizioneFormaEl = document.getElementById('labDescrizioneForma');
+            const numCampioniValEl = document.getElementById('labNumCampioniVal');
+            const freqRipetizioneValEl = document.getElementById('labFreqRipetizioneVal');
+            const vxValIstantaneoEl = document.getElementById('labVxValIstantaneo');
+            const vyValIstantaneoEl = document.getElementById('labVyValIstantaneo');
+            
+            if (!ctxForma || !ctxSegnaleX || !ctxSegnaleY || !selectForma || !sliderVelocita || !pausaPlayBtn || !checkboxPianoCartesiano) {
+                console.error("Uno o più elementi del laboratorio non sono stati trovati nel DOM dopo l'inserimento.");
+                return null;
+            }
+            
+            formaCanvas.width = 280; formaCanvas.height = 280;
+            [segnaleXCanvas, segnaleYCanvas].forEach(c => { if(c) { c.width = 300; c.height = 70; }});
+
+            const centroXFormaCanvas = formaCanvas.width / 2;
+            const centroYFormaCanvas = formaCanvas.height / 2;
+            const scalaForma = formaCanvas.width / 2.2; 
+            const campioniPerLatoDefault = 80; 
+            const campioniCerchioDefault = 320;
+            const frequenzaCampionamentoSimulata = 1000; 
+            const opacitaSvanimentoFissa = 0.15;
+            let segnaleXGlobal = [], segnaleYGlobal = [];
+            let campioneCorrente = 0;
+            let animazioneInPausa = false;
+            let mostraPianoCartesiano = checkboxPianoCartesiano.checked;
+
+            const datiForme = {
+                quadrato: { vertici: [{x:-1,y:-1},{x:1,y:-1},{x:1,y:1},{x:-1,y:1},{x:-1,y:-1}], desc: "Quadrato" },
+                triangolo: { vertici: [{x:0,y:-1},{x:1,y:1},{x:-1,y:1},{x:0,y:-1}], desc: "Triangolo" },
+                stella: { vertici: [{x:0,y:-1},{x:0.2939,y:-0.4045},{x:0.9511,y:-0.3090},{x:0.4755,y:0.1545},{x:0.5878,y:0.8090},{x:0,y:0.5},{x:-0.5878,y:0.8090},{x:-0.4755,y:0.1545},{x:-0.9511,y:-0.3090},{x:-0.2939,y:-0.4045},{x:0,y:-1}], desc: "Stella"},
+                cerchio: { desc: "Cerchio" },
+                rampa_x: { vertici: [{x:-1,y:0},{x:1,y:0}], desc: "Rampa X, Y costante" },
+                rampa_y: { vertici: [{x:0,y:-1},{x:0,y:1}], desc: "Rampa Y, X costante" }
+            };
+
+            function generaSegnaliDaVertici(vertici, campioniPerLato = campioniPerLatoDefault) {
+                let sx = [], sy = [];
+                if (!vertici || vertici.length < 2) return { sx, sy };
+                for (let i = 0; i < vertici.length - 1; i++) {
+                    const p1 = vertici[i], p2 = vertici[i+1];
+                    for (let j = 0; j < campioniPerLato; j++) {
+                        const t = j / campioniPerLato;
+                        sx.push(p1.x + (p2.x - p1.x) * t);
+                        sy.push(p1.y + (p2.y - p1.y) * t);
+                    }
+                }
+                sx.push(vertici[vertici.length - 1].x);
+                sy.push(vertici[vertici.length - 1].y);
+                return { segnaleX: sx, segnaleY: sy };
+            }
+
+            function generaSegnaliCerchio(numCampioni = campioniCerchioDefault) {
+                let sx = [], sy = [];
+                for (let i = 0; i <= numCampioni; i++) {
+                    const angolo = (i / numCampioni) * 2 * Math.PI;
+                    sx.push(Math.cos(angolo)); sy.push(Math.sin(angolo));
+                }
+                return { segnaleX: sx, segnaleY: sy };
+            }
+            
+            function disegnaGraficoLinea(ctx, canvasEl, segnale, colore, cursoreIdx = -1) {
+                 if (!ctx || !canvasEl) return;
+                ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
+                if (!segnale || segnale.length === 0) return;
+                ctx.beginPath();
+                ctx.strokeStyle = colore; ctx.lineWidth = 1.5;
+                const passoXCanvas = canvasEl.width / (segnale.length > 1 ? (segnale.length - 1) : 1);
+                const centroYCanvas = canvasEl.height / 2;
+                const scalaYCanvas = (canvasEl.height / 2) * 0.8;
+                segnale.forEach((valore, index) => {
+                    const x = index * passoXCanvas;
+                    const y = centroYCanvas - valore * scalaYCanvas;
+                    if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                });
+                ctx.stroke();
+                ctx.strokeStyle = "#444"; ctx.lineWidth = 0.5; ctx.beginPath();
+                ctx.moveTo(0, centroYCanvas); ctx.lineTo(canvasEl.width, centroYCanvas);
+                ctx.moveTo(5, 5); ctx.lineTo(5, canvasEl.height - 5); ctx.stroke();
+                const cursoreHTMLEl = canvasEl.id === 'labSegnaleXCanvas' ? cursoreX : cursoreY;
+                const tooltipHTMLEl = canvasEl.id === 'labSegnaleXCanvas' ? tooltipX : tooltipY;
+                if (cursoreIdx >= 0 && cursoreIdx < segnale.length && cursoreHTMLEl && tooltipHTMLEl) {
+                    const xCursore = cursoreIdx * passoXCanvas;
+                    cursoreHTMLEl.style.left = `${xCursore - 1}px`;
+                    cursoreHTMLEl.style.display = 'block';
+                    tooltipHTMLEl.style.left = `${Math.min(xCursore + 5, canvasEl.width - tooltipHTMLEl.offsetWidth - 5)}px`;
+                    tooltipHTMLEl.style.top = `${centroYCanvas - segnale[cursoreIdx] * scalaYCanvas - 20}px`;
+                    tooltipHTMLEl.textContent = segnale[cursoreIdx].toFixed(2);
+                    tooltipHTMLEl.style.display = 'block';
+                } else if (cursoreHTMLEl && tooltipHTMLEl) {
+                    cursoreHTMLEl.style.display = 'none';
+                    tooltipHTMLEl.style.display = 'none';
+                }
+            }
+
+            function disegnaPianoCartesiano(ctx, larghezza, altezza, centroX, centroY, scala) {
+                 if (!ctx) return;
+                ctx.strokeStyle = "#005337"; 
+                ctx.fillStyle = "#00a85e";   
+                ctx.lineWidth = 0.5;
+                ctx.font = "10px monospace";
+                ctx.beginPath(); ctx.moveTo(0, centroY); ctx.lineTo(larghezza, centroY); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(centroX, 0); ctx.lineTo(centroX, altezza); ctx.stroke();
+                for (let i = -1; i <= 1; i += 0.5) { 
+                    if (i === 0 && (-1*scala + centroX) < 15 && centroX > 10) continue; 
+                    const xPos = centroX + i * scala;
+                    ctx.beginPath(); ctx.moveTo(xPos, centroY - 5); ctx.lineTo(xPos, centroY + 5); ctx.stroke();
+                    if (i !== 0 || centroX < 15) ctx.fillText(i.toFixed(1), xPos - (i < 0 ? 12 : (i > 0 ? 6 : 3) ), centroY + 15);
+                }
+                for (let i = -1; i <= 1; i += 0.5) { 
+                    const yPos = centroY - i * scala; 
+                    ctx.beginPath(); ctx.moveTo(centroX - 5, yPos); ctx.lineTo(centroX + 5, yPos); ctx.stroke();
+                     if (i !== 0) ctx.fillText(i.toFixed(1), centroX + 8, yPos + 4);
+                }
+                 if (centroX > 10) ctx.fillText("0", centroX + 8, centroY + 15);
+            }
+            
+            function disegnaStatoFormaCorrenteLab() { 
+                if (!ctxForma) return;
+                ctxForma.clearRect(0, 0, formaCanvas.width, formaCanvas.height);
+                if (mostraPianoCartesiano) {
+                    disegnaPianoCartesiano(ctxForma, formaCanvas.width, formaCanvas.height, centroXFormaCanvas, centroYFormaCanvas, scalaForma);
+                }
+                ctxForma.beginPath();
+                if (segnaleXGlobal.length > 0) {
+                    const xInizio = centroXFormaCanvas + segnaleXGlobal[0] * scalaForma;
+                    const yInizio = centroYFormaCanvas - segnaleYGlobal[0] * scalaForma;
+                    ctxForma.moveTo(xInizio, yInizio);
+                    let puntoFinaleTraccia = campioneCorrente > 0 ? campioneCorrente : 0;
+                    if (animazioneInPausa && campioneCorrente === segnaleXGlobal.length && segnaleXGlobal.length > 0) {
+                         puntoFinaleTraccia = segnaleXGlobal.length;
+                    } else if (animazioneInPausa && campioneCorrente === 0 && segnaleXGlobal.length > 0 && vxValIstantaneoEl && vxValIstantaneoEl.textContent !== "N/D" && parseFloat(vxValIstantaneoEl.textContent) !== segnaleXGlobal[0]) {
+                         puntoFinaleTraccia = segnaleXGlobal.length;
+                    }
+                    for (let k = 1; k < puntoFinaleTraccia; k++) {
+                        const x = centroXFormaCanvas + segnaleXGlobal[k] * scalaForma;
+                        const y = centroYFormaCanvas - segnaleYGlobal[k] * scalaForma;
+                        ctxForma.lineTo(x, y);
+                    }
+                    ctxForma.strokeStyle = '#00ff99'; 
+                    ctxForma.lineWidth = 1.5;
+                    ctxForma.stroke();
+                }
+            }
+
+            function preparaSegnaliEAggiornaInfoLab() {
+                if(!selectForma || !descrizioneFormaEl || !numCampioniValEl || !freqRipetizioneValEl || !vxValIstantaneoEl || !vyValIstantaneoEl) return;
+                const nomeForma = selectForma.value;
+                const infoForma = datiForme[nomeForma];
+                descrizioneFormaEl.textContent = infoForma.desc || "";
+                let segnali;
+                if (nomeForma === "cerchio") segnali = generaSegnaliCerchio();
+                else segnali = generaSegnaliDaVertici(infoForma.vertici);
+                segnaleXGlobal = segnali.segnaleX;
+                segnaleYGlobal = segnali.segnaleY;
+                const numCampioni = segnaleXGlobal.length;
+                numCampioniValEl.textContent = numCampioni;
+                const periodoForma = numCampioni / frequenzaCampionamentoSimulata;
+                const freqRipetizione = periodoForma > 0 ? (1 / periodoForma) : 0;
+                freqRipetizioneValEl.textContent = freqRipetizione.toFixed(2);
+                campioneCorrente = 0;
+                disegnaStatoFormaCorrenteLab(); 
+                disegnaGraficoLinea(ctxSegnaleX, segnaleXCanvas, segnaleXGlobal, '#00c698', -1);
+                disegnaGraficoLinea(ctxSegnaleY, segnaleYCanvas, segnaleYGlobal, '#00a85e', -1);
+                vxValIstantaneoEl.textContent = segnaleXGlobal.length > 0 ? segnaleXGlobal[0].toFixed(2) : "N/D"; 
+                vyValIstantaneoEl.textContent = segnaleYGlobal.length > 0 ? segnaleYGlobal[0].toFixed(2) : "N/D";
+            }
+
+            function loopAnimazioneLab() {
+                if (animazioneInPausa) { return; }
+                if (!ctxForma) return;
+
+                const avanzamento = parseInt(sliderVelocita.value);
+                ctxForma.fillStyle = `rgba(0, 0, 0, ${opacitaSvanimentoFissa})`; 
+                ctxForma.fillRect(0, 0, formaCanvas.width, formaCanvas.height);
+                if (mostraPianoCartesiano) {
+                    disegnaPianoCartesiano(ctxForma, formaCanvas.width, formaCanvas.height, centroXFormaCanvas, centroYFormaCanvas, scalaForma);
+                }
+                let ultimoCampioneDisegnatoQuestoFrame = campioneCorrente; 
+                if (segnaleXGlobal.length > 1) {
+                    ctxForma.beginPath();
+                    ctxForma.strokeStyle = '#00ff99';
+                    ctxForma.lineWidth = 1.5; 
+                    for (let i = 0; i < avanzamento; i++) {
+                        let idxP1 = (campioneCorrente + i);
+                        if (idxP1 >= segnaleXGlobal.length) idxP1 %= segnaleXGlobal.length;
+                        let idxP2 = (campioneCorrente + i + 1);
+                        if (idxP2 >= segnaleXGlobal.length) idxP2 %= segnaleXGlobal.length;
+                        const x1 = centroXFormaCanvas + segnaleXGlobal[idxP1] * scalaForma;
+                        const y1 = centroYFormaCanvas - segnaleYGlobal[idxP1] * scalaForma;
+                        const x2 = centroXFormaCanvas + segnaleXGlobal[idxP2] * scalaForma;
+                        const y2 = centroYFormaCanvas - segnaleYGlobal[idxP2] * scalaForma;
+                        if (i === 0) { ctxForma.moveTo(x1, y1); }
+                        ctxForma.lineTo(x2, y2); 
+                        ultimoCampioneDisegnatoQuestoFrame = idxP2;
+                    }
+                    ctxForma.stroke();
+                }
+                campioneCorrente = (campioneCorrente + avanzamento) % segnaleXGlobal.length;
+                if (segnaleXGlobal.length === 0) campioneCorrente = 0;
+                const idxDaMostrare = ultimoCampioneDisegnatoQuestoFrame;
+                if (segnaleXGlobal.length > 0 && idxDaMostrare < segnaleXGlobal.length && vxValIstantaneoEl) {
+                    vxValIstantaneoEl.textContent = segnaleXGlobal[idxDaMostrare].toFixed(2);
+                    vyValIstantaneoEl.textContent = segnaleYGlobal[idxDaMostrare].toFixed(2);
+                    disegnaGraficoLinea(ctxSegnaleX, segnaleXCanvas, segnaleXGlobal, '#00c698', idxDaMostrare);
+                    disegnaGraficoLinea(ctxSegnaleY, segnaleYCanvas, segnaleYGlobal, '#00a85e', idxDaMostrare);
+                } else if (segnaleXGlobal.length === 0 && vxValIstantaneoEl) {
+                    vxValIstantaneoEl.textContent = "N/D"; vyValIstantaneoEl.textContent = "N/D";
+                }
+                idAnimazioneLaboratorio = requestAnimationFrame(loopAnimazioneLab);
+            }
+            
+            checkboxPianoCartesiano.addEventListener('change', function() {
+                mostraPianoCartesiano = this.checked;
+                if (animazioneInPausa || segnaleXGlobal.length === 0) {
+                    disegnaStatoFormaCorrenteLab();
+                }
+            });
+            pausaPlayBtn.addEventListener('click', function() {
+                animazioneInPausa = !animazioneInPausa;
+                if (animazioneInPausa) {
+                    this.textContent = 'Riparti';
+                    if (idAnimazioneLaboratorio) { cancelAnimationFrame(idAnimazioneLaboratorio); }
+                } else {
+                    this.textContent = 'Pausa';
+                    if (segnaleXGlobal.length > 0) { idAnimazioneLaboratorio = requestAnimationFrame(loopAnimazioneLab); }
+                }
+            });
+            selectForma.addEventListener('change', () => {
+                if (idAnimazioneLaboratorio) cancelAnimationFrame(idAnimazioneLaboratorio);
+                preparaSegnaliEAggiornaInfoLab();
+                animazioneInPausa = false; 
+                if(pausaPlayBtn) pausaPlayBtn.textContent = 'Pausa';
+                if (segnaleXGlobal.length > 0) {
+                    idAnimazioneLaboratorio = requestAnimationFrame(loopAnimazioneLab);
+                }
+            });
+            
+            preparaSegnaliEAggiornaInfoLab();
+            if(segnaleXGlobal.length > 0) {
+                 idAnimazioneLaboratorio = requestAnimationFrame(loopAnimazioneLab);
+            }
+            return idAnimazioneLaboratorio; 
+        }
+
+        window.fermaAnimazioneLaboratorio = function() {
+            if (idAnimazioneLaboratorio) {
+                cancelAnimationFrame(idAnimazioneLaboratorio);
+                idAnimazioneLaboratorio = null;
+                const ctxFormaLab = document.getElementById('formaCanvasLab')?.getContext('2d');
+                const ctxSegXLab = document.getElementById('labSegnaleXCanvas')?.getContext('2d');
+                const ctxSegYLab = document.getElementById('labSegnaleYCanvas')?.getContext('2d');
+                if(ctxFormaLab) ctxFormaLab.clearRect(0,0,ctxFormaLab.canvas.width, ctxFormaLab.canvas.height);
+                if(ctxSegXLab) ctxSegXLab.clearRect(0,0,ctxSegXLab.canvas.width, ctxSegXLab.canvas.height);
+                if(ctxSegYLab) ctxSegYLab.clearRect(0,0,ctxSegYLab.canvas.width, ctxSegYLab.canvas.height);
+                ['labCursoreX', 'labCursoreY', 'labTooltipX', 'labTooltipY'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.style.display = 'none';
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const vociMenuPrincipale = document.querySelectorAll('.navigazione-principale .voce-menu a.titolo-espandibile');
+            const areaTestoDinamico = document.getElementById('area-testo-dinamico');
+            let titoloAttualmenteAttivoPagina = null;
+            const testoIntroduttivoOriginaleHTML = areaTestoDinamico ? areaTestoDinamico.innerHTML : "";
+
+            if (areaTestoDinamico && testoIntroduttivoOriginaleHTML.trim() !== "") {
+                areaTestoDinamico.classList.add('visibile');
+            } else if (areaTestoDinamico) {
+                areaTestoDinamico.classList.remove('visibile');
+            }
+
+            vociMenuPrincipale.forEach(titolo => {
+                const laser = document.createElement('span');
+                laser.classList.add('effetto-laser');
+                titolo.appendChild(laser);
+                titolo.addEventListener('mouseenter', () => { laser.style.width = '100%'; });
+                titolo.addEventListener('mouseleave', () => { laser.style.width = '0'; });
+
+                titolo.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const targetId = this.dataset.target;
+                    const sorgenteContenuto = document.getElementById(targetId);
+
+                    if (!sorgenteContenuto || !areaTestoDinamico) { return; }
+
+                    if (titoloAttualmenteAttivoPagina && 
+                        titoloAttualmenteAttivoPagina.dataset.target === "contenuto-laboratorio-oscilloscopio" && 
+                        targetId !== "contenuto-laboratorio-oscilloscopio") {
+                        if (window.fermaAnimazioneLaboratorio) window.fermaAnimazioneLaboratorio();
+                    }
+                    
+                    if (titoloAttualmenteAttivoPagina === this && areaTestoDinamico.innerHTML !== testoIntroduttivoOriginaleHTML && !(this.dataset.target === "contenuto-laboratorio-oscilloscopio" && areaTestoDinamico.querySelector('#formaCanvasLab') )) {
+                        areaTestoDinamico.innerHTML = testoIntroduttivoOriginaleHTML;
+                        this.classList.remove('attivo');
+                        titoloAttualmenteAttivoPagina = null;
+                        areaTestoDinamico.classList.add('visibile'); 
+                        if (targetId === "contenuto-laboratorio-oscilloscopio" && window.fermaAnimazioneLaboratorio) {
+                             window.fermaAnimazioneLaboratorio();
+                        }
+                    } else if (titoloAttualmenteAttivoPagina === this && targetId === "contenuto-laboratorio-oscilloscopio" && areaTestoDinamico.querySelector('#formaCanvasLab') ) {
+                        areaTestoDinamico.innerHTML = testoIntroduttivoOriginaleHTML;
+                         if (window.fermaAnimazioneLaboratorio) window.fermaAnimazioneLaboratorio();
+                        this.classList.remove('attivo');
+                        titoloAttualmenteAttivoPagina = null;
+                         areaTestoDinamico.classList.add('visibile'); 
+                    }
+                    else {
+                        areaTestoDinamico.innerHTML = sorgenteContenuto.innerHTML;
+                        areaTestoDinamico.classList.add('visibile');
+                        if (titoloAttualmenteAttivoPagina && titoloAttualmenteAttivoPagina !== this) {
+                            titoloAttualmenteAttivoPagina.classList.remove('attivo');
+                        }
+                        this.classList.add('attivo');
+                        titoloAttualmenteAttivoPagina = this;
+
+                        if (targetId === "contenuto-laboratorio-oscilloscopio") {
+                            setTimeout(function() {
+                                if (typeof inizializzaLaboratorioOscilloscopio === "function") {
+                                   inizializzaLaboratorioOscilloscopio();
+                                }
+                            }, 0);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
