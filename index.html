@@ -330,23 +330,26 @@
         </ul>
         <h4>ONDE COMPLESSE</h4>
         <p>I suoni che sentiamo sono onde complesse, cioè un mix di tante onde sinusoidali di frequenze, ampiezze e fasi diverse sovrapposte tra loro. Per scomporre un’onda complessa nelle sue componenti base si usa la trasformata di Fourier, descritta dalla seguente equazione:</p>
-        <p class="equazione">F(ω) = &int;<sub>&minus;&infin;</sub><sup>&infin;</sup> f(t)e<sup>&minus;iωt</sup>dt</p>
+        <p class="equazione">X(f) = &int;<sub>&minus;&infin;</sub><sup>&infin;</sup> x(t) &sdot; e<sup>&minus;i2&pi;ft</sup> dt</p>
+        <p class="equazione">y(t) = A &sdot; sin(2&pi;ft + &phi;)</p>
         <p>Dove:</p>
         <ul>
-            <li><strong>F(\omega)</strong>: Risultato (spettro delle frequenze).</li>
-            <li><strong>\omega</strong>: Frequenza (angolare).</li>
-            <li><strong>\int_{-\infty}^{\infty}</strong>: Somma (su tutto il tempo).</li>
-            <li><strong>f(t)</strong>: Segnale originale (nel tempo).</li>
-            <li><strong>e^{-i\omega t}</strong>: "Mattoncino" di frequenza (onda sinusoidale/cosinusoidale complessa).
-                <ul style="margin-top: 0.3em; margin-bottom: 0.3em; padding-left: 20px;">
-                    <li><strong>e</strong>: Base dei logaritmi naturali (costante matematica).</li>
-                    <li><strong>i</strong>: Unità immaginaria (&radic;-1).</li>
-                    <li><strong>t</strong>: Tempo (nella parte esponenziale).</li>
-                </ul>
-            </li>
-            <li><strong>dt</strong>: Intervallino di tempo (indica integrazione rispetto al tempo).</li>
+            <li>A = ampiezza</li>
+            <li>f = frequenza</li>
+            <li>t = tempo</li>
+            <li>&phi; = fase</li>
         </ul>
-    </div>
+        <h4>ONDE COMPLESSE</h4>
+        <p>I suoni che sentiamo sono onde complesse, cioè un mix di tante onde sinusoidali di frequenze, ampiezze e fasi diverse sovrapposte tra loro. Per scomporre un’onda complessa nelle sue componenti base si usa la trasformata di Fourier, descritta dalla seguente equazione:</p>
+        <p class="equazione">X(f) = &int;<sub>&minus;&infin;</sub><sup>&infin;</sup> x(t) &sdot; e<sup>&minus;i2&pi;ft</sup> dt</p>
+        <p>Dove:</p>
+        <ul>
+            <li><strong>X(f)</strong>: <strong>Risultato</strong>: quanto di ogni <strong>frequenza f</strong> c'è.</li>
+            <li><strong>&int; ... dt</strong>: <strong>Somma</strong>: su tutto il <strong>tempo t</strong>.</li>
+            <li><strong>x(t)</strong>: Il tuo <strong>segnale</strong> originale.</li>
+            <li><strong>e<sup>&minus;i2&pi;ft</sup></strong>: <strong>Analizzatore di frequenza</strong>: una "sonda" a forma di onda per la frequenza f.</li>
+        </ul>
+        </div>
 
     <div id="contenuto-esperimenti" class="contenitore-dati-nascosto">
         <h2>Lissajous</h2>
