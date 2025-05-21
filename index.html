@@ -17,30 +17,30 @@
             font-family: monospace, sans-serif; background-color: #111; color: #00a85e;
             display: flex;
             flex-direction: column;
-            min-height: 100%; 
+            min-height: 100%;
             margin: 0;
-            padding: 15px; 
+            padding: 15px;
         }
 
         /* Header and Nav flex properties */
         .titolo-pagina-principale, .navigazione-principale {
-            flex-shrink: 0; 
+            flex-shrink: 0;
         }
         .titolo-pagina-principale {
             text-align: left; color: #00c698; font-family: monospace, sans-serif;
-            font-size: 3.2rem; 
+            font-size: 3.2rem;
             margin-bottom: 25px; margin-top: 0; font-weight: normal;
             padding-left: 20px; padding-right: 20px; width:100%;
         }
         .navigazione-principale {
-            padding: 0 20px 15px 20px; 
+            padding: 0 20px 15px 20px;
             position: relative; z-index: 1; width:100%;
             border-bottom: 1px solid #003e28; margin-bottom:20px;
         }
         .menu { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap:wrap; align-items: flex-start; }
         .voce-menu { margin-right: 20px; margin-bottom: 5px; }
         .voce-menu:last-child { margin-right: 0; }
-        
+
         .titolo-espandibile {
             text-decoration: none; color: #00a85e; padding: 8px 12px; position: relative;
             transition: color 0.3s ease, background-color 0.3s ease; display: inline-block;
@@ -58,42 +58,42 @@
             position: absolute; bottom: 0; left: 0; width: 0%; height: 1px;
             background-color: #00c698; transition: width 0.5s ease-in-out;
         }
-        
+
         .contenitore-dati-nascosto { display: none; }
 
         #area-testo-dinamico {
             max-width: 860px;
-            width: 100%; 
-            margin: 0 auto 20px auto; 
+            width: 100%;
+            margin: 0 auto 20px auto;
             padding: 20px;
-            color: #ccc; 
+            color: #ccc;
             line-height: 1.7;
-            flex-grow: 1; 
-            display: flex; 
+            flex-grow: 1;
+            display: flex;
             flex-direction: column;
-            overflow: auto; 
+            overflow: auto;
         }
         #area-testo-dinamico:not(.visibile) {
             display: none;
         }
-        #area-testo-dinamico h2 { 
+        #area-testo-dinamico h2 {
             color: #00c698; margin-top: 0; border-bottom: 1px solid #005337;
             padding-bottom: 10px; font-size: 1.6rem;
             font-weight: normal; text-align: left;
         }
-        #area-testo-dinamico h4 { 
+        #area-testo-dinamico h4 {
             color: #00c698;
             font-size: 1.2rem;
-            margin-top: 1.8em; 
-            margin-bottom: 0.8em; 
+            margin-top: 1.8em;
+            margin-bottom: 0.8em;
             font-weight: bold;
-            text-align: left; 
+            text-align: left;
         }
         #area-testo-dinamico ul {
-            list-style-type: disc; 
-            padding-left: 25px; 
-            margin-top: 0.5em; 
-            margin-bottom: 1em; 
+            list-style-type: disc;
+            padding-left: 25px;
+            margin-top: 0.5em;
+            margin-bottom: 1em;
         }
         #area-testo-dinamico ul ul { /* Stile per liste annidate */
              margin-top: 0.3em;
@@ -103,27 +103,27 @@
         #area-testo-dinamico li {
             margin-bottom: 0.5em; /* Aumentato leggermente per la lista dei componenti */
         }
-        #area-testo-dinamico p { 
+        #area-testo-dinamico p {
              text-align: justify;
-             margin-bottom: 1em; 
+             margin-bottom: 1em;
         }
-        .equazione { 
-            text-align: center; 
-            font-weight: bold; 
-            margin: 1.2em 0; 
+        .equazione {
+            text-align: center;
+            font-weight: bold;
+            margin: 1.2em 0;
             padding: 10px;
             background-color: #1a1a1a;
             border-radius: 4px;
             border: 1px solid #003e28;
             color: #00ff99;
-            overflow-x: auto; 
+            overflow-x: auto;
         }
 
         /* Styles for the Oscilloscope Lab section */
         #area-testo-dinamico .controlli-forms-container-lab {
             display: flex; flex-direction: column; gap: 10px; padding: 10px 15px;
             background-color: #222; border-radius: 5px; border: 1px solid #003e28; margin-bottom: 15px;
-            margin-top: 20px; 
+            margin-top: 20px;
         }
         #area-testo-dinamico .riga-controlli-lab {
             display: flex; gap: 15px; align-items: center; justify-content: center; flex-wrap: wrap;
@@ -150,15 +150,15 @@
             padding: 10px; background-color: #1a1a1a; border-radius: 4px; border: 1px solid #003020;
         }
         #area-testo-dinamico .colonna-visualizzazione-lab h3 { font-size: 1.1rem; margin-bottom:5px; color: #00c698;}
-        #area-testo-dinamico canvas { border: 1px solid #005337; background-color: #000; } 
+        #area-testo-dinamico canvas { border: 1px solid #005337; background-color: #000; }
         #area-testo-dinamico #formaCanvasLab { width: 280px; height: 280px; }
         #area-testo-dinamico .canvas-segnale-lab { width: 300px; height: 70px; position: relative;}
-        #area-testo-dinamico .info-forma-lab, 
-        #area-testo-dinamico .info-valori-istantanei-lab { 
+        #area-testo-dinamico .info-forma-lab,
+        #area-testo-dinamico .info-valori-istantanei-lab {
             font-size: 0.85em; color: #ccc; width: 100%;
             padding: 5px; box-sizing: border-box; text-align:center;
         }
-        #area-testo-dinamico .info-forma-lab p, 
+        #area-testo-dinamico .info-forma-lab p,
         #area-testo-dinamico .info-valori-istantanei-lab p { margin: 2px 0;}
         #area-testo-dinamico .info-valori-istantanei-lab span { color: #00ff99; font-weight: bold; }
 
@@ -173,18 +173,18 @@
         }
 
         /* Stili per Laboratorio Onde con Fase (in Onde Sonore) */
-        .lab-fase-container { 
-            margin-top: 25px; padding: 15px 0; 
+        .lab-fase-container {
+            margin-top: 25px; padding: 15px 0;
             background-color: #1f1f1f; border-radius: 5px; border: 1px solid #003e28;
         }
         .lab-fase-controls {
-            background-color: #1c1c1c; padding: 20px; border-radius: 5px; 
+            background-color: #1c1c1c; padding: 20px; border-radius: 5px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3); margin-bottom: 20px;
-            max-width: 760px; margin-left: auto; margin-right: auto; 
+            max-width: 760px; margin-left: auto; margin-right: auto;
         }
         .lab-fase-control-group { margin-bottom: 18px; }
         .lab-fase-controls label {
-            display: block; margin-bottom: 8px; font-weight: bold; color: #00a85e; 
+            display: block; margin-bottom: 8px; font-weight: bold; color: #00a85e;
         }
         .lab-fase-controls input[type="range"] {
             width: 100%; cursor: pointer; background: #333; border-radius: 5px;
@@ -192,10 +192,10 @@
         }
         .lab-fase-controls input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none; appearance: none; width: 20px; height: 20px;
-            background: #00a85e; border-radius: 50%; border: 2px solid #111; 
+            background: #00a85e; border-radius: 50%; border: 2px solid #111;
         }
         .lab-fase-controls input[type="range"]::-moz-range-thumb {
-            width: 18px; height: 18px; background: #00a85e; 
+            width: 18px; height: 18px; background: #00a85e;
             border-radius: 50%; border: 2px solid #111; cursor: pointer;
         }
         .lab-fase-value-display {
@@ -203,25 +203,25 @@
             color: #00ff99; background-color: #2a2a2a;
             padding: 3px 5px; border-radius: 3px; margin-left: 5px;
         }
-        #labFaseWaveCanvas { 
+        #labFaseWaveCanvas {
             background-color: black; border-radius: 5px; display: block;
-            margin: 0 auto 20px auto; border: 1px solid #005337; 
+            margin: 0 auto 20px auto; border: 1px solid #005337;
         }
 
         /* Stili per Laboratorio Lissajous */
         .lab-lis-wrapper { margin-top: 25px; padding: 0; }
-        .lab-lis-container { 
+        .lab-lis-container {
             background-color: #1c1c1c; border-radius: 8px; padding: 25px;
             border: 1px solid #003e28; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            width: 100%; max-width: 700px; margin: 0 auto; 
+            width: 100%; max-width: 700px; margin: 0 auto;
         }
-        .lab-lis-controls { 
+        .lab-lis-controls {
             display: grid; grid-template-columns: 1fr 1fr;
             gap: 25px; margin-bottom: 25px;
         }
-        .lab-lis-control-group { margin-bottom: 10px; } 
-        .lab-lis-controls label { 
-            display: block; margin-bottom: 10px; font-weight: bold; color: #00a85e; 
+        .lab-lis-control-group { margin-bottom: 10px; }
+        .lab-lis-controls label {
+            display: block; margin-bottom: 10px; font-weight: bold; color: #00a85e;
         }
         .lab-lis-controls input[type="range"] {
             width: 100%; height: 10px; background: #333; border-radius: 5px;
@@ -229,24 +229,24 @@
         }
         .lab-lis-controls input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none; appearance: none; width: 20px; height: 20px;
-            background: #00c698; border-radius: 50%; border: 2px solid #111; 
+            background: #00c698; border-radius: 50%; border: 2px solid #111;
         }
         .lab-lis-controls input[type="range"]::-moz-range-thumb {
             width: 18px; height: 18px; background: #00c698;
             border-radius: 50%; border: 2px solid #111; cursor: pointer;
         }
-        .lab-lis-value-display { 
+        .lab-lis-value-display {
             display: inline-block; width: 45px; text-align: right;
             margin-left: 8px; color: #00ff99; background-color: #2a2a2a;
             padding: 4px 6px; border-radius: 3px;
         }
-        #labLisCanvas { 
-            background-color: #000000; border: 1px solid #005337; 
+        #labLisCanvas {
+            background-color: #000000; border: 1px solid #005337;
             border-radius: 5px; display: block;
-            margin: 0 auto; width: 100%; 
+            margin: 0 auto; width: 100%;
         }
-        .lab-lis-phase-control { 
-            grid-column: span 2; background-color: #222; 
+        .lab-lis-phase-control {
+            grid-column: span 2; background-color: #222;
             padding: 15px; border-radius: 5px;
             margin-top: 10px; border: 1px solid #003e28;
         }
@@ -286,11 +286,11 @@
             <li>Ampiezza (m)</li>
             <li>Fase (gradi)</li>
         </ul>
-    
+
         <div class="lab-fase-container">
             <div class="lab-fase-controls">
                 <div class="lab-fase-control-group">
-                    <label for="labFaseFrequency"> 
+                    <label for="labFaseFrequency">
                         Frequenza: <span id="labFaseFrequencyValue" class="lab-fase-value-display">2.0</span>
                     </label>
                     <input type="range" id="labFaseFrequency" min="0.5" max="10" value="2" step="0.1">
@@ -308,50 +308,42 @@
                     <input type="range" id="labFasePhase" min="0" max="360" value="0" step="1">
                 </div>
             </div>
-            <canvas id="labFaseWaveCanvas"></canvas> 
+            <canvas id="labFaseWaveCanvas"></canvas>
         </div>
 
         <h4>ONDE SINUSOIDALI</h4>
         <p>Un'onda sinusoidale (o sinusoide) è la forma d’onda più semplice e pura che esista. È una variazione regolare e continua nel tempo, descritta dalla funzione matematica:</p>
-        <p class="equazione">y(t) = A⋅sin(2πft + ϕ)</p>
+        <p class="equazione">y(t) = A &sdot; sin(2&pi;ft + &phi;)</p>
         <p>Dove:</p>
         <ul>
             <li>A = ampiezza</li>
             <li>f = frequenza</li>
             <li>t = tempo</li>
-            <li>φ = fase</li>
+            <li>&phi; = fase</li>
         </ul>
         <h4>ONDE COMPLESSE</h4>
         <p>I suoni che sentiamo sono onde complesse, cioè un mix di tante onde sinusoidali di frequenze, ampiezze e fasi diverse sovrapposte tra loro. Per scomporre un’onda complessa nelle sue componenti base si usa la trasformata di Fourier, descritta dalla seguente equazione:</p>
-        <p class="equazione">F(ω) = &int;<sub>&minus;&infin;</sub><sup>&infin;</sup> f(t)e<sup>&minus;iωt</sup>dt</p>
+        <p class="equazione">X(f) = &int;<sub>&minus;&infin;</sub><sup>&infin;</sup> x(t) &sdot; e<sup>&minus;i2&pi;ft</sup> dt</p>
         <p>Dove:</p>
         <ul>
-            <li><strong>F(\omega)</strong>: Risultato (spettro delle frequenze).</li>
-            <li><strong>\omega</strong>: Frequenza (angolare).</li>
-            <li><strong>\int_{-\infty}^{\infty}</strong>: Somma (su tutto il tempo).</li>
-            <li><strong>f(t)</strong>: Segnale originale (nel tempo).</li>
-            <li><strong>e^{-i\omega t}</strong>: "Mattoncino" di frequenza (onda sinusoidale/cosinusoidale complessa).
-                <ul style="margin-top: 0.3em; margin-bottom: 0.3em; padding-left: 20px;">
-                    <li><strong>e</strong>: Base dei logaritmi naturali (costante matematica).</li>
-                    <li><strong>i</strong>: Unità immaginaria (&radic;-1).</li>
-                    <li><strong>t</strong>: Tempo (nella parte esponenziale).</li>
-                </ul>
-            </li>
-            <li><strong>dt</strong>: Intervallino di tempo (indica integrazione rispetto al tempo).</li>
+            <li><strong>X(f)</strong>: <strong>Risultato</strong>: quanto di ogni <strong>frequenza f</strong> c'è.</li>
+            <li><strong>&int;<sub>&minus;&infin;</sub><sup>&infin;</sup> ... dt</strong>: <strong>Somma</strong>: su tutto il <strong>tempo t</strong> (da meno infinito a più infinito).</li>
+            <li><strong>x(t)</strong>: Il tuo <strong>segnale</strong> originale.</li>
+            <li><strong>e<sup>&minus;i2&pi;ft</sup></strong>: <strong>Analizzatore di frequenza</strong>: una "sonda" a forma di onda per la frequenza f.</li>
         </ul>
-    </div>
+        </div>
 
     <div id="contenuto-esperimenti" class="contenitore-dati-nascosto">
         <h2>Lissajous</h2>
         <p>Jules Antoine Lissajous ideò nel 1855 un metodo ingegnoso per visualizzare la combinazione di due movimenti oscillatori sinusoidali perpendicolari.</p>
         <p>Lissajous utilizzò due diapason perpendicolari con piccoli specchi attaccati alle punte. Un raggio di luce veniva riflesso da entrambi gli specchi e proiettato su uno schermo. Quando i diapason vibrano, il punto luminoso traccia automaticamente curve che rappresentano la composizione delle due oscillazioni.</p>
         <p>Queste composizioni sono chiamate “figure di Lissajous” e sono rappresentate da due equazioni parametriche:</p>
-        <p class="equazione">x(t) = A sin(ωₓt + δₓ)<br>y(t) = B sin(ωᵧt + δᵧ)</p>
+        <p class="equazione">x(t) = A sin(&omega;<sub>x</sub>t + &delta;<sub>x</sub>)<br>y(t) = B sin(&omega;<sub>y</sub>t + &delta;<sub>y</sub>)</p>
         <p>Dove:</p>
         <ul>
             <li>A, B = ampiezze delle oscillazioni</li>
-            <li>ωₓ, ωᵧ = frequenze angolari</li>
-            <li>δₓ, δᵧ = fasi iniziali</li>
+            <li>&omega;<sub>x</sub>, &omega;<sub>y</sub> = frequenze angolari</li>
+            <li>&delta;<sub>x</sub>, &delta;<sub>y</sub> = fasi iniziali</li>
             <li>t = parametro temporale</li>
         </ul>
         <p>La forma delle figure dipende da due parametri:</p>
@@ -382,14 +374,14 @@
             </div>
         </div>
     </div>
-    
+
     <div id="contenuto-laboratorio-oscilloscopio" class="contenitore-dati-nascosto">
         <h2>Oscilloscopio</h2>
         <p>All’interno degli oscilloscopi si trova un tubo a raggi catodici nel quale si forma un fascio sottile di elettroni che colpisce lo schermo fluorescente, creando il puntino luminoso, che è proprio quello che vediamo noi nello schermo dell’oscilloscopio.</p>
         <p>Negli oscilloscopi è presente una modalità particolare chiamata "modalità X-Y" in cui l’oscilloscopio usa due ingressi separati: un segnale viene applicato all'ingresso del canale X (che rappresenta lo spostamento orizzontale) e un secondo segnale viene applicato all'ingresso del canale Y (che rappresenta lo spostamento verticale).</p>
         <p>Il fascio di elettroni viene quindi spostato simultaneamente in entrambe le direzioni in funzione dei due segnali indipendenti. La posizione del puntino luminoso è quindi controllata dai due segnali: X e Y.</p>
         <p>Nel momento in cui si applicano due segnali sinusoidali agli ingressi X e Y dell'oscilloscopio, si possono ottenere figure di Lissajous, ma la modalità X-Y dell’oscilloscopio non è limitata alle onde sinusoidali, anzi, possiamo anche lavorare con onde complesse che, se controllate, possono diventare strumento di disegno.</p>
-        
+
         <div class="controlli-forms-container-lab">
             <div class="riga-controlli-lab">
                 <label for="labSelezionaForma">Scegli forma:</label>
@@ -441,8 +433,8 @@
     </div>
 
     <script>
-        let idAnimazioneLaboratorio = null; 
-        let labOndeFaseResizeHandler = null; 
+        let idAnimazioneLaboratorio = null;
+        let labOndeFaseResizeHandler = null;
         let idAnimazioneLissajous = null;
 
         function inizializzaLaboratorioOndeFase() {
@@ -461,10 +453,10 @@
             }
             const coloreGriglia = "rgba(0, 83, 55, 0.5)";
             const coloreLineaCentrale = "rgba(0, 100, 70, 0.7)";
-            const coloreOnda = "#00ff99"; 
+            const coloreOnda = "#00ff99";
             let visualWidth = 800; let visualHeight = 300;
             function setupCanvasDimensions() {
-                const container = canvas.parentElement; 
+                const container = canvas.parentElement;
                 let newVisualWidth = 800;
                 if (container) {
                     const areaDinamico = document.getElementById('area-testo-dinamico');
@@ -472,35 +464,35 @@
                     areaDinamicoContentWidth = Math.min(areaDinamicoContentWidth, 820);
                     newVisualWidth = Math.min(800, areaDinamicoContentWidth, window.innerWidth - 40);
                 }
-                visualWidth = newVisualWidth > 0 ? newVisualWidth : 800; 
-                visualHeight = visualWidth * (300/800); 
+                visualWidth = newVisualWidth > 0 ? newVisualWidth : 800;
+                visualHeight = visualWidth * (300/800);
                 const dpr = window.devicePixelRatio || 1;
                 canvas.width = visualWidth * dpr; canvas.height = visualHeight * dpr;
                 canvas.style.width = `${visualWidth}px`; canvas.style.height = `${visualHeight}px`;
-                ctx.scale(dpr, dpr); 
+                ctx.scale(dpr, dpr);
             }
             function drawWave() {
                 const currentVisualWidth = parseFloat(canvas.style.width) || visualWidth;
                 const currentVisualHeight = parseFloat(canvas.style.height) || visualHeight;
-                const centerY = currentVisualHeight / 2; 
+                const centerY = currentVisualHeight / 2;
                 const amplitude = parseFloat(amplitudeSlider.value);
                 const scaledAmplitude = Math.min(amplitude, currentVisualHeight / 2 * 0.95);
                 const numCicli = parseFloat(frequencySlider.value);
                 const phaseGrados = parseFloat(phaseSlider.value);
-                const phaseRadianti = phaseGrados * Math.PI / 180; 
-                ctx.clearRect(0, 0, currentVisualWidth, currentVisualHeight ); 
-                ctx.strokeStyle = coloreGriglia; ctx.lineWidth = 0.5; 
+                const phaseRadianti = phaseGrados * Math.PI / 180;
+                ctx.clearRect(0, 0, currentVisualWidth, currentVisualHeight );
+                ctx.strokeStyle = coloreGriglia; ctx.lineWidth = 0.5;
                 if (numCicli > 0 && currentVisualWidth > 0) {
                     const wavelengthPixels = currentVisualWidth / numCicli;
-                    if (wavelengthPixels > 0) { 
+                    if (wavelengthPixels > 0) {
                         for (let x = 0; x <= currentVisualWidth + 1; x += wavelengthPixels) {
                             ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, currentVisualHeight); ctx.stroke();
                         }
                     }
                 }
-                ctx.strokeStyle = coloreLineaCentrale; ctx.lineWidth = 1; 
+                ctx.strokeStyle = coloreLineaCentrale; ctx.lineWidth = 1;
                 ctx.beginPath(); ctx.moveTo(0, centerY); ctx.lineTo(currentVisualWidth, centerY); ctx.stroke();
-                ctx.strokeStyle = coloreOnda; ctx.lineWidth = 2; 
+                ctx.strokeStyle = coloreOnda; ctx.lineWidth = 2;
                 ctx.beginPath();
                 if (currentVisualWidth > 0) {
                     for (let x_pixel = 0; x_pixel < currentVisualWidth; x_pixel++) {
@@ -523,7 +515,7 @@
             if (labOndeFaseResizeHandler) window.removeEventListener('resize', labOndeFaseResizeHandler);
             labOndeFaseResizeHandler = function() { setupCanvasDimensions(); drawWave(); };
             window.addEventListener('resize', labOndeFaseResizeHandler);
-            setupCanvasDimensions(); drawWave(); 
+            setupCanvasDimensions(); drawWave();
         }
         window.fermaLaboratorioOndeFase = function() {
             if (labOndeFaseResizeHandler) {
@@ -547,28 +539,28 @@
             if (!ctx || !freqXSlider || !freqYSlider || !phaseSlider || !freqXValue || !freqYValue || !phaseValue) {
                 console.error("Elementi del laboratorio Lissajous non trovati."); return;
             }
-            const visualCanvasWidth = 500; const visualCanvasHeight = 500; 
+            const visualCanvasWidth = 500; const visualCanvasHeight = 500;
             const dpr = window.devicePixelRatio || 1;
             canvas.width = visualCanvasWidth * dpr; canvas.height = visualCanvasHeight * dpr;
             canvas.style.width = `${visualCanvasWidth}px`; canvas.style.height = `${visualCanvasHeight}px`;
-            ctx.scale(dpr, dpr); 
+            ctx.scale(dpr, dpr);
             const centerX = visualCanvasWidth / 2; const centerY = visualCanvasHeight / 2;
             const plotScale = Math.min(visualCanvasWidth, visualCanvasHeight) * 0.45;
-            let time_idx = 0; const animationSpeedFactor = 3; 
-            let resolution = 1000; let completeFigure = []; 
+            let time_idx = 0; const animationSpeedFactor = 3;
+            let resolution = 1000; let completeFigure = [];
             const coloreGrigliaFine = "rgba(0, 83, 55, 0.2)";
             const coloreAssiPrincipali = "rgba(0, 100, 65, 0.5)";
             const coloreEtichetteAssi = "rgba(0, 168, 94, 0.7)";
-            const coloreTracciaCompleta = "rgba(0, 200, 120, 0.8)"; 
-            const colorePuntoAnimato = "#00ff99"; 
+            const coloreTracciaCompleta = "rgba(0, 200, 120, 0.8)";
+            const colorePuntoAnimato = "#00ff99";
             const coloreLineeProiezione = "rgba(0, 168, 94, 0.25)";
             function updateCompleteFigure() {
                 const freqX = parseFloat(freqXSlider.value); const freqY = parseFloat(freqYSlider.value);
                 const phase = parseFloat(phaseSlider.value) * Math.PI / 180;
-                resolution = Math.max(500, 200 * Math.max(freqX, freqY)); 
+                resolution = Math.max(500, 200 * Math.max(freqX, freqY));
                 completeFigure = [];
-                for (let i = 0; i <= resolution; i++) { 
-                    const t = (i / resolution) * Math.PI * 2; 
+                for (let i = 0; i <= resolution; i++) {
+                    const t = (i / resolution) * Math.PI * 2;
                     completeFigure.push({ x: Math.sin(freqX * t), y: Math.sin(freqY * t + phase) });
                 }
             }
@@ -577,7 +569,7 @@
                 const tickLabelFontSize = 9; ctx.font = `${tickLabelFontSize}px monospace`;
                 ctx.fillStyle = coloreEtichetteAssi; ctx.textAlign = "center"; ctx.textBaseline = "middle";
                 ctx.strokeStyle = coloreGrigliaFine; ctx.lineWidth = 0.5;
-                const numDivisions = 4; 
+                const numDivisions = 4;
                 for (let i = -numDivisions; i <= numDivisions; i++) {
                     const val = i / numDivisions;
                     const xCanvas = centerX + val * plotScale;
@@ -615,7 +607,7 @@
                     const currentX = centerX + plotScale * punto.x;
                     const currentY = centerY - plotScale * punto.y;
                     ctx.strokeStyle = coloreLineeProiezione; ctx.lineWidth = 0.5; ctx.setLineDash([2, 2]);
-                    ctx.beginPath(); ctx.moveTo(currentX, currentY); ctx.lineTo(currentX, centerY); 
+                    ctx.beginPath(); ctx.moveTo(currentX, currentY); ctx.lineTo(currentX, centerY);
                     ctx.moveTo(currentX, currentY); ctx.lineTo(centerX, currentY); ctx.stroke();
                     ctx.setLineDash([]);
                     ctx.fillStyle = colorePuntoAnimato; ctx.beginPath();
@@ -624,14 +616,14 @@
                     ctx.beginPath(); ctx.arc(currentX, currentY, 6, 0, Math.PI * 2); ctx.stroke();
                 }
                 time_idx += animationSpeedFactor;
-                if (time_idx >= completeFigure.length && completeFigure.length > 0) time_idx = 0; 
-                freqXValue.textContent = freqXSlider.value; 
+                if (time_idx >= completeFigure.length && completeFigure.length > 0) time_idx = 0;
+                freqXValue.textContent = freqXSlider.value;
                 freqYValue.textContent = freqYSlider.value;
                 phaseValue.textContent = phaseSlider.value;
                 idAnimazioneLissajous = requestAnimationFrame(drawLissajous);
             }
             function handleParamChange() { updateCompleteFigure(); time_idx = 0; }
-            freqXSlider.removeEventListener('input', handleParamChange); 
+            freqXSlider.removeEventListener('input', handleParamChange);
             freqYSlider.removeEventListener('input', handleParamChange);
             phaseSlider.removeEventListener('input', handleParamChange);
             freqXSlider.addEventListener('input', handleParamChange);
@@ -648,8 +640,8 @@
         };
 
         function inizializzaLaboratorioOscilloscopio() {
-            if (idAnimazioneLaboratorio) cancelAnimationFrame(idAnimazioneLaboratorio); 
-            idAnimazioneLaboratorio = null; 
+            if (idAnimazioneLaboratorio) cancelAnimationFrame(idAnimazioneLaboratorio);
+            idAnimazioneLaboratorio = null;
             const formaCanvas = document.getElementById('formaCanvasLab');
             if (!formaCanvas) { return null; }
             const ctxForma = formaCanvas.getContext('2d');
@@ -675,10 +667,10 @@
             [segnaleXCanvas, segnaleYCanvas].forEach(c => { if(c) { c.width = 300; c.height = 70; }});
             const centroXFormaCanvas = formaCanvas.width / 2;
             const centroYFormaCanvas = formaCanvas.height / 2;
-            const scalaForma = formaCanvas.width / 2.2; 
-            const campioniPerLatoDefault = 80; 
+            const scalaForma = formaCanvas.width / 2.2;
+            const campioniPerLatoDefault = 80;
             const campioniCerchioDefault = 320;
-            const frequenzaCampionamentoSimulata = 1000; 
+            const frequenzaCampionamentoSimulata = 1000;
             const opacitaSvanimentoFissa = 0.15;
             let segnaleXGlobal = [], segnaleYGlobal = [];
             let campioneCorrente = 0;
@@ -750,26 +742,26 @@
             }
             function disegnaPianoCartesiano(ctx, larghezza, altezza, centroX, centroY, scala) {
                  if (!ctx) return;
-                ctx.strokeStyle = "#005337"; 
-                ctx.fillStyle = "#00a85e";   
+                ctx.strokeStyle = "#005337";
+                ctx.fillStyle = "#00a85e";
                 ctx.lineWidth = 0.5;
                 ctx.font = "10px monospace";
                 ctx.beginPath(); ctx.moveTo(0, centroY); ctx.lineTo(larghezza, centroY); ctx.stroke();
                 ctx.beginPath(); ctx.moveTo(centroX, 0); ctx.lineTo(centroX, altezza); ctx.stroke();
-                for (let i = -1; i <= 1; i += 0.5) { 
-                    if (i === 0 && (-1*scala + centroX) < 15 && centroX > 10) continue; 
+                for (let i = -1; i <= 1; i += 0.5) {
+                    if (i === 0 && (-1*scala + centroX) < 15 && centroX > 10) continue;
                     const xPos = centroX + i * scala;
                     ctx.beginPath(); ctx.moveTo(xPos, centroY - 5); ctx.lineTo(xPos, centroY + 5); ctx.stroke();
                     if (i !== 0 || centroX < 15) ctx.fillText(i.toFixed(1), xPos - (i < 0 ? 12 : (i > 0 ? 6 : 3) ), centroY + 15);
                 }
-                for (let i = -1; i <= 1; i += 0.5) { 
-                    const yPos = centroY - i * scala; 
+                for (let i = -1; i <= 1; i += 0.5) {
+                    const yPos = centroY - i * scala;
                     ctx.beginPath(); ctx.moveTo(centroX - 5, yPos); ctx.lineTo(centroX + 5, yPos); ctx.stroke();
                      if (i !== 0) ctx.fillText(i.toFixed(1), centroX + 8, yPos + 4);
                 }
                  if (centroX > 10) ctx.fillText("0", centroX + 8, centroY + 15);
             }
-            function disegnaStatoFormaCorrenteLab() { 
+            function disegnaStatoFormaCorrenteLab() {
                 if (!ctxForma) return;
                 ctxForma.clearRect(0, 0, formaCanvas.width, formaCanvas.height);
                 if (mostraPianoCartesiano) {
@@ -791,7 +783,7 @@
                         const y = centroYFormaCanvas - segnaleYGlobal[k] * scalaForma;
                         ctxForma.lineTo(x, y);
                     }
-                    ctxForma.strokeStyle = '#00ff99'; 
+                    ctxForma.strokeStyle = '#00ff99';
                     ctxForma.lineWidth = 1.5;
                     ctxForma.stroke();
                 }
@@ -805,26 +797,26 @@
                 segnaleXGlobal = segnali.segnaleX;
                 segnaleYGlobal = segnali.segnaleY;
                 campioneCorrente = 0;
-                disegnaStatoFormaCorrenteLab(); 
+                disegnaStatoFormaCorrenteLab();
                 disegnaGraficoLinea(ctxSegnaleX, segnaleXCanvas, segnaleXGlobal, '#00c698', -1);
                 disegnaGraficoLinea(ctxSegnaleY, segnaleYCanvas, segnaleYGlobal, '#00a85e', -1);
-                vxValIstantaneoEl.textContent = segnaleXGlobal.length > 0 ? segnaleXGlobal[0].toFixed(2) : "N/D"; 
+                vxValIstantaneoEl.textContent = segnaleXGlobal.length > 0 ? segnaleXGlobal[0].toFixed(2) : "N/D";
                 vyValIstantaneoEl.textContent = segnaleYGlobal.length > 0 ? segnaleYGlobal[0].toFixed(2) : "N/D";
             }
             function loopAnimazioneLab() {
                 if (animazioneInPausa) { return; }
                 if (!ctxForma) return;
                 const avanzamento = parseInt(sliderVelocita.value);
-                ctxForma.fillStyle = `rgba(0, 0, 0, ${opacitaSvanimentoFissa})`; 
+                ctxForma.fillStyle = `rgba(0, 0, 0, ${opacitaSvanimentoFissa})`;
                 ctxForma.fillRect(0, 0, formaCanvas.width, formaCanvas.height);
                 if (mostraPianoCartesiano) {
                     disegnaPianoCartesiano(ctxForma, formaCanvas.width, formaCanvas.height, centroXFormaCanvas, centroYFormaCanvas, scalaForma);
                 }
-                let ultimoCampioneDisegnatoQuestoFrame = campioneCorrente; 
+                let ultimoCampioneDisegnatoQuestoFrame = campioneCorrente;
                 if (segnaleXGlobal.length > 1) {
                     ctxForma.beginPath();
                     ctxForma.strokeStyle = '#00ff99';
-                    ctxForma.lineWidth = 1.5; 
+                    ctxForma.lineWidth = 1.5;
                     for (let i = 0; i < avanzamento; i++) {
                         let idxP1 = (campioneCorrente + i);
                         if (idxP1 >= segnaleXGlobal.length) idxP1 %= segnaleXGlobal.length;
@@ -835,7 +827,7 @@
                         const x2 = centroXFormaCanvas + segnaleXGlobal[idxP2] * scalaForma;
                         const y2 = centroYFormaCanvas - segnaleYGlobal[idxP2] * scalaForma;
                         if (i === 0) { ctxForma.moveTo(x1, y1); }
-                        ctxForma.lineTo(x2, y2); 
+                        ctxForma.lineTo(x2, y2);
                         ultimoCampioneDisegnatoQuestoFrame = idxP2;
                     }
                     ctxForma.stroke();
@@ -872,7 +864,7 @@
             selectForma.addEventListener('change', () => {
                 if (idAnimazioneLaboratorio) cancelAnimationFrame(idAnimazioneLaboratorio);
                 preparaSegnaliEAggiornaInfoLab();
-                animazioneInPausa = false; 
+                animazioneInPausa = false;
                 if(pausaPlayBtn) pausaPlayBtn.textContent = 'Pausa';
                 if (segnaleXGlobal.length > 0) {
                     idAnimazioneLaboratorio = requestAnimationFrame(loopAnimazioneLab);
@@ -882,10 +874,10 @@
             if(segnaleXGlobal.length > 0 && !animazioneInPausa) {
                  idAnimazioneLaboratorio = requestAnimationFrame(loopAnimazioneLab);
             }
-            return idAnimazioneLaboratorio; 
+            return idAnimazioneLaboratorio;
         }
 
-        window.fermaAnimazioneLaboratorio = function() { 
+        window.fermaAnimazioneLaboratorio = function() {
             if (idAnimazioneLaboratorio) {
                 cancelAnimationFrame(idAnimazioneLaboratorio);
                 idAnimazioneLaboratorio = null;
@@ -904,7 +896,7 @@
                 areaTestoDinamico.classList.remove('visibile');
             }
 
-            vociMenuPrincipale.forEach(titoloLink => { 
+            vociMenuPrincipale.forEach(titoloLink => {
                 const laser = document.createElement('span');
                 laser.classList.add('effetto-laser');
                 titoloLink.appendChild(laser);
@@ -923,14 +915,14 @@
                         if (prevTargetId === "contenuto-laboratorio-oscilloscopio" && targetId !== prevTargetId) {
                             if (window.fermaAnimazioneLaboratorio) window.fermaAnimazioneLaboratorio();
                         }
-                        if (prevTargetId === "contenuto-suono" && targetId !== prevTargetId) { 
+                        if (prevTargetId === "contenuto-suono" && targetId !== prevTargetId) {
                             if (window.fermaLaboratorioOndeFase) window.fermaLaboratorioOndeFase();
                         }
-                         if (prevTargetId === "contenuto-esperimenti" && targetId !== prevTargetId) { 
+                         if (prevTargetId === "contenuto-esperimenti" && targetId !== prevTargetId) {
                             if (window.fermaLaboratorioLissajous) window.fermaLaboratorioLissajous();
                         }
                     }
-                    
+
                     const isLabOscilloscopioAttivo = this.dataset.target === "contenuto-laboratorio-oscilloscopio" && areaTestoDinamico.querySelector('#formaCanvasLab');
                     const isLabOndeFaseAttivo = this.dataset.target === "contenuto-suono" && areaTestoDinamico.querySelector('#labFaseWaveCanvas');
                     const isLabLissajousAttivo = this.dataset.target === "contenuto-esperimenti" && areaTestoDinamico.querySelector('#labLisCanvas');
@@ -939,7 +931,7 @@
                         areaTestoDinamico.innerHTML = testoIntroduttivoOriginaleHTML;
                         this.classList.remove('attivo');
                         titoloAttualmenteAttivoPagina = null;
-                        areaTestoDinamico.classList.add('visibile'); 
+                        areaTestoDinamico.classList.add('visibile');
                     } else if (titoloAttualmenteAttivoPagina === this && (isLabOscilloscopioAttivo || isLabOndeFaseAttivo || isLabLissajousAttivo) ) {
                         areaTestoDinamico.innerHTML = testoIntroduttivoOriginaleHTML;
                         if (isLabOscilloscopioAttivo && window.fermaAnimazioneLaboratorio) window.fermaAnimazioneLaboratorio();
@@ -947,21 +939,21 @@
                         if (isLabLissajousAttivo && window.fermaLaboratorioLissajous) window.fermaLaboratorioLissajous();
                         this.classList.remove('attivo');
                         titoloAttualmenteAttivoPagina = null;
-                        areaTestoDinamico.classList.add('visibile'); 
+                        areaTestoDinamico.classList.add('visibile');
                     }
                     else {
                         areaTestoDinamico.innerHTML = sorgenteContenuto.innerHTML;
                         areaTestoDinamico.classList.add('visibile');
-                        
+
                         vociMenuPrincipale.forEach(link => link.classList.remove('attivo'));
                         this.classList.add('attivo');
                         titoloAttualmenteAttivoPagina = this;
 
                         if (targetId === "contenuto-laboratorio-oscilloscopio") {
                             setTimeout(function() { if (typeof inizializzaLaboratorioOscilloscopio === "function") inizializzaLaboratorioOscilloscopio(); }, 0);
-                        } else if (targetId === "contenuto-suono") { 
+                        } else if (targetId === "contenuto-suono") {
                             setTimeout(function() { if (typeof inizializzaLaboratorioOndeFase === "function") inizializzaLaboratorioOndeFase(); }, 0);
-                        } else if (targetId === "contenuto-esperimenti") { 
+                        } else if (targetId === "contenuto-esperimenti") {
                              setTimeout(function() { if (typeof inizializzaLaboratorioLissajous === "function") inizializzaLaboratorioLissajous(); }, 0);
                         }
                     }
