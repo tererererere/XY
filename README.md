@@ -1,7 +1,7 @@
 # XY
 
 https://tererererere.github.io/XY 
-Descovich Giulia 
+Descovich Giulia <br>
 Tonelotto Teresa
 ISIA U
 Matematica per il design, a.a. 2024/2025
