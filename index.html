@@ -121,14 +121,14 @@
 
         /* Styles for the Oscilloscope Lab section */
         #area-testo-dinamico .controlli-forms-container-lab {
-            display: flex; flex-direction: column; gap: 10px; padding: 10px 15px;
+            display: flex; flex-direction: column; gap: 15px; /* Increased gap */ padding: 15px; /* Increased padding */
             background-color: #222; border-radius: 5px; border: 1px solid #003e28; margin-bottom: 15px;
             margin-top: 20px;
         }
         #area-testo-dinamico .riga-controlli-lab {
-            display: flex; gap: 15px; align-items: center; justify-content: center; flex-wrap: wrap;
+            display: flex; gap: 10px; /* Adjusted gap */ align-items: center; justify-content: flex-start; /* Align to start */ flex-wrap: wrap;
         }
-        #area-testo-dinamico .controlli-forms-container-lab label { margin-right: 5px; color: #00a85e;}
+        #area-testo-dinamico .controlli-forms-container-lab label { margin-right: 5px; color: #00a85e; white-space: nowrap;}
         #area-testo-dinamico .controlli-forms-container-lab select,
         #area-testo-dinamico .controlli-forms-container-lab input[type="range"],
         #area-testo-dinamico .controlli-forms-container-lab button,
@@ -137,10 +137,17 @@
             padding: 8px; border-radius: 3px; font-family: monospace, sans-serif; vertical-align: middle;
             cursor: pointer;
         }
-        #area-testo-dinamico .controlli-forms-container-lab input[type="range"] { padding: 0; width: 120px;}
+        #area-testo-dinamico .controlli-forms-container-lab input[type="range"] { padding: 0; width: 100px; /* Adjusted width */}
         #area-testo-dinamico .controlli-forms-container-lab button:hover { background-color: #005337; }
         #area-testo-dinamico .controllo-opzione-lab { display: flex; align-items: center; gap: 5px; color: #00a85e;}
         #area-testo-dinamico .controllo-opzione-lab input[type="checkbox"] { width: 15px; height: 15px; }
+
+        #area-testo-dinamico .valore-slider-lab { /* Style for slider value display */
+            min-width: 30px; text-align: right; color: #00ff99; background-color: #2a2a2a;
+            padding: 2px 4px; border-radius: 3px; margin-left: 3px;
+        }
+
+
         #area-testo-dinamico .contenitore-principale-lab {
             display: flex; flex-wrap: wrap; justify-content: center;
             align-items: flex-start; gap: 15px; width: 100%;
@@ -331,7 +338,7 @@
             <li><strong>x(t)</strong>: Il tuo <strong>segnale</strong> originale.</li>
             <li><strong>e<sup>&minus;i2&pi;ft</sup></strong>: <strong>Analizzatore di frequenza</strong>: una "sonda" a forma di onda per la frequenza f.</li>
         </ul>
-        </div>
+    </div>
 
     <div id="contenuto-esperimenti" class="contenitore-dati-nascosto">
         <h2>Lissajous</h2>
@@ -376,7 +383,7 @@
     </div>
 
     <div id="contenuto-laboratorio-oscilloscopio" class="contenitore-dati-nascosto">
-        <h2>Oscilloscopio</h2>
+        <h2>Oscilloscopio Simulata</h2>
         <p>All’interno degli oscilloscopi si trova un tubo a raggi catodici nel quale si forma un fascio sottile di elettroni che colpisce lo schermo fluorescente, creando il puntino luminoso, che è proprio quello che vediamo noi nello schermo dell’oscilloscopio.</p>
         <p>Negli oscilloscopi è presente una modalità particolare chiamata "modalità X-Y" in cui l’oscilloscopio usa due ingressi separati: un segnale viene applicato all'ingresso del canale X (che rappresenta lo spostamento orizzontale) e un secondo segnale viene applicato all'ingresso del canale Y (che rappresenta lo spostamento verticale).</p>
         <p>Il fascio di elettroni viene quindi spostato simultaneamente in entrambe le direzioni in funzione dei due segnali indipendenti. La posizione del puntino luminoso è quindi controllata dai due segnali: X e Y.</p>
@@ -384,16 +391,49 @@
 
         <div class="controlli-forms-container-lab">
             <div class="riga-controlli-lab">
-                <label for="labSelezionaForma">Scegli forma:</label>
-                <select id="labSelezionaForma">
-                    <option value="quadrato">Quadrato</option>
-                    <option value="triangolo">Triangolo</option>
-                    <option value="stella">Stella (5 punte)</option>
-                    <option value="cerchio">Cerchio</option>
-                    <option value="rampa_x">Rampa X</option>
-                    <option value="rampa_y">Rampa Y</option>
+                <label for="labModalitaVisualizzazione">Modalità:</label>
+                <select id="labModalitaVisualizzazione">
+                    <option value="complesse">Forme Complesse Predefinite</option>
+                    <option value="sinusoidali">Onde Sinusoidali (Lissajous)</option>
                 </select>
-                <label for="labVelocitaTracciamento">Velocità:</label>
+            </div>
+
+            <div id="labControlliFormeComplesse">
+                <div class="riga-controlli-lab">
+                    <label for="labSelezionaForma">Scegli forma:</label>
+                    <select id="labSelezionaForma">
+                        <option value="quadrato">Quadrato</option>
+                        <option value="triangolo">Triangolo</option>
+                        <option value="stella">Stella (5 punte)</option>
+                        <option value="rampa_x">Rampa X</option>
+                        <option value="rampa_y">Rampa Y</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="labControlliLissajous" style="display: none;">
+                <div class="riga-controlli-lab">
+                    <label for="labLissajousFreqX">Freq X:</label>
+                    <input type="range" id="labLissajousFreqX" min="1" max="12" value="1" step="1">
+                    <span id="labLissajousFreqXValue" class="valore-slider-lab">1</span>
+                </div>
+                <div class="riga-controlli-lab">
+                    <label for="labLissajousFreqY">Freq Y:</label>
+                    <input type="range" id="labLissajousFreqY" min="1" max="12" value="1" step="1">
+                    <span id="labLissajousFreqYValue" class="valore-slider-lab">1</span>
+                </div>
+                <div class="riga-controlli-lab">
+                    <label for="labLissajousPhase">Fase Y (risp. X):</label>
+                    <input type="range" id="labLissajousPhase" min="0" max="360" value="90" step="1">
+                    <span id="labLissajousPhaseValue" class="valore-slider-lab">90</span>°
+                </div>
+                <div class="riga-controlli-lab">
+                    <button id="labVisualizzaCerchioBtn">Preset Cerchio</button>
+                </div>
+            </div>
+             <hr style="border-color: #003e28; width:100%; margin-top: 5px; margin-bottom:5px;">
+            <div class="riga-controlli-lab">
+                <label for="labVelocitaTracciamento">Velocità Tracciamento:</label>
                 <input type="range" id="labVelocitaTracciamento" min="1" max="80" value="10">
                 <button id="labPausaPlayBtn">Pausa</button>
             </div>
@@ -409,7 +449,7 @@
                 <h3>Forma (X-Y)</h3>
                 <canvas id="formaCanvasLab"></canvas>
                 <div id="labInfoForma" class="info-forma-lab">
-                </div>
+                    </div>
             </div>
             <div class="colonna-visualizzazione-lab">
                 <h3>Segnale X</h3>
@@ -438,7 +478,6 @@
         let idAnimazioneLissajous = null;
 
         function inizializzaLaboratorioOndeFase() {
-            // ... (Codice lab onde fase, come prima)
             const canvas = document.getElementById('labFaseWaveCanvas');
             if (!canvas) { console.log("Canvas labFaseWaveCanvas non trovato."); return; }
             const ctx = canvas.getContext('2d');
@@ -525,7 +564,6 @@
         };
 
         function inizializzaLaboratorioLissajous() {
-            // ... (Codice lab Lissajous, come prima)
             if (idAnimazioneLissajous) cancelAnimationFrame(idAnimazioneLissajous);
             const canvas = document.getElementById('labLisCanvas');
             if(!canvas) { console.error("Canvas Lissajous non trovato"); return; }
@@ -639,9 +677,11 @@
             }
         };
 
+        // MODIFICHE PRINCIPALI IN QUESTA FUNZIONE
         function inizializzaLaboratorioOscilloscopio() {
             if (idAnimazioneLaboratorio) cancelAnimationFrame(idAnimazioneLaboratorio);
             idAnimazioneLaboratorio = null;
+
             const formaCanvas = document.getElementById('formaCanvasLab');
             if (!formaCanvas) { return null; }
             const ctxForma = formaCanvas.getContext('2d');
@@ -653,37 +693,59 @@
             const cursoreY = document.getElementById('labCursoreY');
             const tooltipX = document.getElementById('labTooltipX');
             const tooltipY = document.getElementById('labTooltipY');
+
+            const modalitaSelector = document.getElementById('labModalitaVisualizzazione');
+            const controlliComplesseDiv = document.getElementById('labControlliFormeComplesse');
+            const controlliLissajousDiv = document.getElementById('labControlliLissajous');
             const selectForma = document.getElementById('labSelezionaForma');
+
+            const lissajousFreqXSlider = document.getElementById('labLissajousFreqX');
+            const lissajousFreqXValueSpan = document.getElementById('labLissajousFreqXValue');
+            const lissajousFreqYSlider = document.getElementById('labLissajousFreqY');
+            const lissajousFreqYValueSpan = document.getElementById('labLissajousFreqYValue');
+            const lissajousPhaseSlider = document.getElementById('labLissajousPhase');
+            const lissajousPhaseValueSpan = document.getElementById('labLissajousPhaseValue');
+            const visualizzaCerchioBtn = document.getElementById('labVisualizzaCerchioBtn');
+
             const sliderVelocita = document.getElementById('labVelocitaTracciamento');
             const pausaPlayBtn = document.getElementById('labPausaPlayBtn');
             const checkboxPianoCartesiano = document.getElementById('labTogglePianoCartesiano');
             const vxValIstantaneoEl = document.getElementById('labVxValIstantaneo');
             const vyValIstantaneoEl = document.getElementById('labVyValIstantaneo');
-            if (!ctxForma || !ctxSegnaleX || !ctxSegnaleY || !selectForma || !sliderVelocita || !pausaPlayBtn || !checkboxPianoCartesiano || !vxValIstantaneoEl || !vyValIstantaneoEl ) {
-                console.error("Uno o più elementi essenziali del laboratorio oscilloscopio non sono stati trovati.");
+            const infoFormaEl = document.getElementById('labInfoForma');
+
+
+            if (!ctxForma || !ctxSegnaleX || !ctxSegnaleY || !modalitaSelector || !controlliComplesseDiv ||
+                !controlliLissajousDiv || !selectForma || !lissajousFreqXSlider || !lissajousFreqYSlider ||
+                !lissajousPhaseSlider || !visualizzaCerchioBtn || !sliderVelocita || !pausaPlayBtn ||
+                !checkboxPianoCartesiano || !vxValIstantaneoEl || !vyValIstantaneoEl || !infoFormaEl) {
+                console.error("Uno o più elementi essenziali del laboratorio oscilloscopio (nuovi o vecchi) non sono stati trovati.");
                 return null;
             }
+
             formaCanvas.width = 280; formaCanvas.height = 280;
             [segnaleXCanvas, segnaleYCanvas].forEach(c => { if(c) { c.width = 300; c.height = 70; }});
             const centroXFormaCanvas = formaCanvas.width / 2;
             const centroYFormaCanvas = formaCanvas.height / 2;
             const scalaForma = formaCanvas.width / 2.2;
             const campioniPerLatoDefault = 80;
-            const campioniCerchioDefault = 320;
-            const frequenzaCampionamentoSimulata = 1000;
+            const campioniLissajousDefault = 360; 
             const opacitaSvanimentoFissa = 0.15;
+
             let segnaleXGlobal = [], segnaleYGlobal = [];
             let campioneCorrente = 0;
             let animazioneInPausa = false;
             let mostraPianoCartesiano = checkboxPianoCartesiano.checked;
+            let modalitaCorrente = modalitaSelector.value;
+
             const datiForme = {
                 quadrato: { vertici: [{x:-1,y:-1},{x:1,y:-1},{x:1,y:1},{x:-1,y:1},{x:-1,y:-1}], desc: "Quadrato" },
                 triangolo: { vertici: [{x:0,y:-1},{x:1,y:1},{x:-1,y:1},{x:0,y:-1}], desc: "Triangolo" },
                 stella: { vertici: [{x:0,y:-1},{x:0.2939,y:-0.4045},{x:0.9511,y:-0.3090},{x:0.4755,y:0.1545},{x:0.5878,y:0.8090},{x:0,y:0.5},{x:-0.5878,y:0.8090},{x:-0.4755,y:0.1545},{x:-0.9511,y:-0.3090},{x:-0.2939,y:-0.4045},{x:0,y:-1}], desc: "Stella"},
-                cerchio: { desc: "Cerchio" },
                 rampa_x: { vertici: [{x:-1,y:0},{x:1,y:0}], desc: "Rampa X, Y costante" },
                 rampa_y: { vertici: [{x:0,y:-1},{x:0,y:1}], desc: "Rampa Y, X costante" }
             };
+
             function generaSegnaliDaVertici(vertici, campioniPerLato = campioniPerLatoDefault) {
                 let sx = [], sy = [];
                 if (!vertici || vertici.length < 2) return { sx, sy };
@@ -695,18 +757,25 @@
                         sy.push(p1.y + (p2.y - p1.y) * t);
                     }
                 }
-                sx.push(vertici[vertici.length - 1].x);
-                sy.push(vertici[vertici.length - 1].y);
-                return { segnaleX: sx, segnaleY: sy };
-            }
-            function generaSegnaliCerchio(numCampioni = campioniCerchioDefault) {
-                let sx = [], sy = [];
-                for (let i = 0; i <= numCampioni; i++) {
-                    const angolo = (i / numCampioni) * 2 * Math.PI;
-                    sx.push(Math.cos(angolo)); sy.push(Math.sin(angolo));
+                if (vertici.length > 0) {
+                     sx.push(vertici[vertici.length - 1].x);
+                     sy.push(vertici[vertici.length - 1].y);
                 }
                 return { segnaleX: sx, segnaleY: sy };
             }
+
+            function generaSegnaliLissajous(freqX, freqY, phaseDiffDeg, numCampioni = campioniLissajousDefault) {
+                let sx = [], sy = [];
+                const phaseDiffRad = phaseDiffDeg * Math.PI / 180;
+                for (let i = 0; i <= numCampioni; i++) { 
+                    const tParam = (i / numCampioni) * 2 * Math.PI;
+                    sx.push(Math.sin(freqX * tParam));
+                    sy.push(Math.sin(freqY * tParam + phaseDiffRad));
+                }
+                return { segnaleX: sx, segnaleY: sy };
+            }
+
+
             function disegnaGraficoLinea(ctx, canvasEl, segnale, colore, cursoreIdx = -1) {
                  if (!ctx || !canvasEl) return;
                 ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
@@ -740,6 +809,7 @@
                     tooltipHTMLEl.style.display = 'none';
                 }
             }
+
             function disegnaPianoCartesiano(ctx, larghezza, altezza, centroX, centroY, scala) {
                  if (!ctx) return;
                 ctx.strokeStyle = "#005337";
@@ -761,6 +831,7 @@
                 }
                  if (centroX > 10) ctx.fillText("0", centroX + 8, centroY + 15);
             }
+
             function disegnaStatoFormaCorrenteLab() {
                 if (!ctxForma) return;
                 ctxForma.clearRect(0, 0, formaCanvas.width, formaCanvas.height);
@@ -772,13 +843,20 @@
                     const xInizio = centroXFormaCanvas + segnaleXGlobal[0] * scalaForma;
                     const yInizio = centroYFormaCanvas - segnaleYGlobal[0] * scalaForma;
                     ctxForma.moveTo(xInizio, yInizio);
-                    let puntoFinaleTraccia = campioneCorrente > 0 ? campioneCorrente : 0;
-                    if (animazioneInPausa && campioneCorrente === segnaleXGlobal.length && segnaleXGlobal.length > 0) {
-                         puntoFinaleTraccia = segnaleXGlobal.length;
-                    } else if (animazioneInPausa && campioneCorrente === 0 && segnaleXGlobal.length > 0 && vxValIstantaneoEl && vxValIstantaneoEl.textContent !== "N/D" && parseFloat(vxValIstantaneoEl.textContent) !== segnaleXGlobal[0]) {
-                         puntoFinaleTraccia = segnaleXGlobal.length;
+                    
+                    let puntoFinaleTraccia = campioneCorrente;
+                    if (animazioneInPausa) { // Se in pausa, mostra tutta la traccia fino all'ultimo punto o tutta se appena iniziata
+                         puntoFinaleTraccia = (campioneCorrente === 0 && segnaleXGlobal.length > 0) ? segnaleXGlobal.length : campioneCorrente;
+                         if (campioneCorrente === segnaleXGlobal.length && segnaleXGlobal.length > 0){ // caso in cui si è completato un ciclo e si è in pausa
+                            puntoFinaleTraccia = segnaleXGlobal.length;
+                         }
+                    } else if (segnaleXGlobal.length > 0) { // In animazione, mostra fino al punto corrente
+                        puntoFinaleTraccia = campioneCorrente;
                     }
+
+
                     for (let k = 1; k < puntoFinaleTraccia; k++) {
+                        if (k >= segnaleXGlobal.length) break; // Sicurezza
                         const x = centroXFormaCanvas + segnaleXGlobal[k] * scalaForma;
                         const y = centroYFormaCanvas - segnaleYGlobal[k] * scalaForma;
                         ctxForma.lineTo(x, y);
@@ -788,52 +866,129 @@
                     ctxForma.stroke();
                 }
             }
-            function preparaSegnaliEAggiornaInfoLab() {
-                const nomeForma = selectForma.value;
-                const infoForma = datiForme[nomeForma];
+
+            function aggiornaInfoDisplay() {
+                if (modalitaCorrente === 'complesse') {
+                    const nomeForma = selectForma.value;
+                    const infoForma = datiForme[nomeForma];
+                    infoFormaEl.innerHTML = `<p>${infoForma ? infoForma.desc : 'N/D'}</p>`;
+                } else if (modalitaCorrente === 'sinusoidali') {
+                    const fx = lissajousFreqXSlider.value;
+                    const fy = lissajousFreqYSlider.value;
+                    const phase = lissajousPhaseSlider.value;
+                    infoFormaEl.innerHTML = `<p>Lissajous: Fx=${fx}, Fy=${fy}, Fase=${phase}°</p>`;
+                } else {
+                     infoFormaEl.innerHTML = "";
+                }
+            }
+
+
+            function preparaSegnaliEAggiornaUI() {
+                if (idAnimazioneLaboratorio) cancelAnimationFrame(idAnimazioneLaboratorio);
+                idAnimazioneLaboratorio = null;
+
                 let segnali;
-                if (nomeForma === "cerchio") segnali = generaSegnaliCerchio();
-                else segnali = generaSegnaliDaVertici(infoForma.vertici);
+                if (modalitaCorrente === 'complesse') {
+                    const nomeForma = selectForma.value;
+                    const infoForma = datiForme[nomeForma];
+                    if (infoForma && infoForma.vertici) {
+                        segnali = generaSegnaliDaVertici(infoForma.vertici);
+                    } else {
+                        segnali = { segnaleX: [], segnaleY: [] }; 
+                    }
+                } else if (modalitaCorrente === 'sinusoidali') {
+                    const freqX = parseFloat(lissajousFreqXSlider.value);
+                    const freqY = parseFloat(lissajousFreqYSlider.value);
+                    const phaseDeg = parseFloat(lissajousPhaseSlider.value);
+                    segnali = generaSegnaliLissajous(freqX, freqY, phaseDeg);
+                }
+
                 segnaleXGlobal = segnali.segnaleX;
                 segnaleYGlobal = segnali.segnaleY;
-                campioneCorrente = 0;
-                disegnaStatoFormaCorrenteLab();
-                disegnaGraficoLinea(ctxSegnaleX, segnaleXCanvas, segnaleXGlobal, '#00c698', -1);
-                disegnaGraficoLinea(ctxSegnaleY, segnaleYCanvas, segnaleYGlobal, '#00a85e', -1);
-                vxValIstantaneoEl.textContent = segnaleXGlobal.length > 0 ? segnaleXGlobal[0].toFixed(2) : "N/D";
-                vyValIstantaneoEl.textContent = segnaleYGlobal.length > 0 ? segnaleYGlobal[0].toFixed(2) : "N/D";
+                campioneCorrente = 0; // Resetta il campione corrente
+
+                aggiornaInfoDisplay();
+                disegnaStatoFormaCorrenteLab(); // Disegna la forma iniziale (o completa se in pausa)
+                
+                let indiceCursoreIniziale = 0;
+                if (animazioneInPausa && segnaleXGlobal.length > 0) {
+                    // Se in pausa, posiziona i cursori alla fine o all'inizio a seconda dello stato precedente
+                   indiceCursoreIniziale = (campioneCorrente > 0 && campioneCorrente < segnaleXGlobal.length) ? campioneCorrente : 0; // o segnaleXGlobal.length -1
+                }
+
+                disegnaGraficoLinea(ctxSegnaleX, segnaleXCanvas, segnaleXGlobal, '#00c698', indiceCursoreIniziale);
+                disegnaGraficoLinea(ctxSegnaleY, segnaleYCanvas, segnaleYGlobal, '#00a85e', indiceCursoreIniziale);
+
+                vxValIstantaneoEl.textContent = segnaleXGlobal.length > 0 ? segnaleXGlobal[indiceCursoreIniziale].toFixed(2) : "N/D";
+                vyValIstantaneoEl.textContent = segnaleYGlobal.length > 0 ? segnaleYGlobal[indiceCursoreIniziale].toFixed(2) : "N/D";
+                
+                pausaPlayBtn.textContent = animazioneInPausa ? 'Riparti' : 'Pausa';
+                if (!animazioneInPausa && segnaleXGlobal.length > 0) {
+                    idAnimazioneLaboratorio = requestAnimationFrame(loopAnimazioneLab);
+                }
             }
+
+
             function loopAnimazioneLab() {
-                if (animazioneInPausa) { return; }
+                if (animazioneInPausa || !segnaleXGlobal || segnaleXGlobal.length === 0) {
+                    return;
+                }
                 if (!ctxForma) return;
+
                 const avanzamento = parseInt(sliderVelocita.value);
                 ctxForma.fillStyle = `rgba(0, 0, 0, ${opacitaSvanimentoFissa})`;
                 ctxForma.fillRect(0, 0, formaCanvas.width, formaCanvas.height);
+
                 if (mostraPianoCartesiano) {
                     disegnaPianoCartesiano(ctxForma, formaCanvas.width, formaCanvas.height, centroXFormaCanvas, centroYFormaCanvas, scalaForma);
                 }
-                let ultimoCampioneDisegnatoQuestoFrame = campioneCorrente;
+
+                let ultimoCampioneDisegnatoQuestoFrame = campioneCorrente; // Salva il campione corrente prima dell'incremento
                 if (segnaleXGlobal.length > 1) {
                     ctxForma.beginPath();
                     ctxForma.strokeStyle = '#00ff99';
                     ctxForma.lineWidth = 1.5;
+                    
+                    // Determina il punto di partenza per il disegno del segmento corrente
+                    let idxP1 = campioneCorrente;
+                    // Se campioneCorrente è 0 e stiamo per iniziare, il primo punto è già stato "disegnato" in preparaSegnali o non c'è un segmento precedente
+                    // Se campioneCorrente > 0, idxP1 è il punto precedente.
+                    // Per il primo frame dopo Riparti (se campioneCorrente=0), non c'è un "segmento precedente" da questo loop, quindi moveTo al primo punto.
+
+                    if (campioneCorrente === 0) { // Inizio tracciamento o loop
+                         const x1 = centroXFormaCanvas + segnaleXGlobal[0] * scalaForma;
+                         const y1 = centroYFormaCanvas - segnaleYGlobal[0] * scalaForma;
+                         ctxForma.moveTo(x1,y1);
+                    } else { // Continua dal punto precedente
+                         const xPrev = centroXFormaCanvas + segnaleXGlobal[(campioneCorrente - 1 + segnaleXGlobal.length) % segnaleXGlobal.length] * scalaForma;
+                         const yPrev = centroYFormaCanvas - segnaleYGlobal[(campioneCorrente - 1 + segnaleXGlobal.length) % segnaleXGlobal.length] * scalaForma;
+                         ctxForma.moveTo(xPrev, yPrev);
+                    }
+
+
                     for (let i = 0; i < avanzamento; i++) {
-                        let idxP1 = (campioneCorrente + i);
-                        if (idxP1 >= segnaleXGlobal.length) idxP1 %= segnaleXGlobal.length;
-                        let idxP2 = (campioneCorrente + i + 1);
-                        if (idxP2 >= segnaleXGlobal.length) idxP2 %= segnaleXGlobal.length;
-                        const x1 = centroXFormaCanvas + segnaleXGlobal[idxP1] * scalaForma;
-                        const y1 = centroYFormaCanvas - segnaleYGlobal[idxP1] * scalaForma;
-                        const x2 = centroXFormaCanvas + segnaleXGlobal[idxP2] * scalaForma;
-                        const y2 = centroYFormaCanvas - segnaleYGlobal[idxP2] * scalaForma;
-                        if (i === 0) { ctxForma.moveTo(x1, y1); }
-                        ctxForma.lineTo(x2, y2);
-                        ultimoCampioneDisegnatoQuestoFrame = idxP2;
+                        let idxTracciato = (campioneCorrente + i) % segnaleXGlobal.length;
+                        
+                        const x = centroXFormaCanvas + segnaleXGlobal[idxTracciato] * scalaForma;
+                        const y = centroYFormaCanvas - segnaleYGlobal[idxTracciato] * scalaForma;
+                        if (i === 0 && campioneCorrente !==0 ) { // Se non è il primissimo punto del segnale, ma il primo del batch
+                            ctxForma.lineTo(x,y); // congiungi al punto corrente prima di iniziare il batch
+                        } else if (i > 0 || campioneCorrente === 0) { // per il primo punto del batch (o se si parte da zero)
+                             ctxForma.lineTo(x, y);
+                        }
+
+                        ultimoCampioneDisegnatoQuestoFrame = idxTracciato;
+                         if ((campioneCorrente + i +1) >= segnaleXGlobal.length) break; // Esce se si supera la lunghezza
                     }
                     ctxForma.stroke();
                 }
-                campioneCorrente = (campioneCorrente + avanzamento) % segnaleXGlobal.length;
-                if (segnaleXGlobal.length === 0) campioneCorrente = 0;
+                
+                campioneCorrente = (campioneCorrente + avanzamento);
+                 if (campioneCorrente >= segnaleXGlobal.length) {
+                    campioneCorrente = 0; 
+                 }
+
+
                 const idxDaMostrare = ultimoCampioneDisegnatoQuestoFrame;
                 if (segnaleXGlobal.length > 0 && idxDaMostrare < segnaleXGlobal.length && vxValIstantaneoEl) {
                     vxValIstantaneoEl.textContent = segnaleXGlobal[idxDaMostrare].toFixed(2);
@@ -845,37 +1000,94 @@
                 }
                 idAnimazioneLaboratorio = requestAnimationFrame(loopAnimazioneLab);
             }
+
+            modalitaSelector.addEventListener('change', function() {
+                modalitaCorrente = this.value;
+                if (modalitaCorrente === 'complesse') {
+                    controlliComplesseDiv.style.display = 'block'; 
+                    controlliLissajousDiv.style.display = 'none';
+                } else { 
+                    controlliComplesseDiv.style.display = 'none';
+                    controlliLissajousDiv.style.display = 'block'; 
+                }
+                animazioneInPausa = false; // Resetta lo stato di pausa quando si cambia modalità
+                preparaSegnaliEAggiornaUI();
+            });
+
+            selectForma.addEventListener('change', () => {
+                if (modalitaCorrente === 'complesse') {
+                    animazioneInPausa = false;
+                    preparaSegnaliEAggiornaUI();
+                }
+            });
+
+            [lissajousFreqXSlider, lissajousFreqYSlider, lissajousPhaseSlider].forEach(slider => {
+                slider.addEventListener('input', function() {
+                    if (this.id === 'labLissajousFreqX') lissajousFreqXValueSpan.textContent = this.value;
+                    if (this.id === 'labLissajousFreqY') lissajousFreqYValueSpan.textContent = this.value;
+                    if (this.id === 'labLissajousPhase') lissajousPhaseValueSpan.textContent = this.value;
+                    if (modalitaCorrente === 'sinusoidali') {
+                        animazioneInPausa = false;
+                        preparaSegnaliEAggiornaUI();
+                    }
+                });
+            });
+
+            visualizzaCerchioBtn.addEventListener('click', () => {
+                if (modalitaCorrente === 'sinusoidali') {
+                    lissajousFreqXSlider.value = 1;
+                    lissajousFreqYSlider.value = 1;
+                    lissajousPhaseSlider.value = 90;
+                    lissajousFreqXValueSpan.textContent = '1';
+                    lissajousFreqYValueSpan.textContent = '1';
+                    lissajousPhaseValueSpan.textContent = '90';
+                    animazioneInPausa = false;
+                    preparaSegnaliEAggiornaUI();
+                }
+            });
+
+
             checkboxPianoCartesiano.addEventListener('change', function() {
                 mostraPianoCartesiano = this.checked;
-                if (animazioneInPausa || segnaleXGlobal.length === 0) {
-                    disegnaStatoFormaCorrenteLab();
+                 // Ridisegna la forma corrente, specialmente se in pausa
+                if (!animazioneInPausa) {
+                    // Se l'animazione è in corso, il prossimo frame la ridisegnerà
+                } else {
+                     disegnaStatoFormaCorrenteLab(); // Ridisegna subito se in pausa
                 }
             });
+
             pausaPlayBtn.addEventListener('click', function() {
                 animazioneInPausa = !animazioneInPausa;
-                if (animazioneInPausa) {
-                    this.textContent = 'Riparti';
-                    if (idAnimazioneLaboratorio) { cancelAnimationFrame(idAnimazioneLaboratorio); }
-                } else {
-                    this.textContent = 'Pausa';
-                    if (segnaleXGlobal.length > 0) { idAnimazioneLaboratorio = requestAnimationFrame(loopAnimazioneLab); }
-                }
-            });
-            selectForma.addEventListener('change', () => {
-                if (idAnimazioneLaboratorio) cancelAnimationFrame(idAnimazioneLaboratorio);
-                preparaSegnaliEAggiornaInfoLab();
-                animazioneInPausa = false;
-                if(pausaPlayBtn) pausaPlayBtn.textContent = 'Pausa';
-                if (segnaleXGlobal.length > 0) {
+                this.textContent = animazioneInPausa ? 'Riparti' : 'Pausa';
+                if (!animazioneInPausa && segnaleXGlobal.length > 0) {
+                    if (idAnimazioneLaboratorio) cancelAnimationFrame(idAnimazioneLaboratorio); 
                     idAnimazioneLaboratorio = requestAnimationFrame(loopAnimazioneLab);
+                } else if (animazioneInPausa) {
+                    if (idAnimazioneLaboratorio) cancelAnimationFrame(idAnimazioneLaboratorio);
+                    disegnaStatoFormaCorrenteLab(); // Mostra la forma statica
+                     if (segnaleXGlobal.length > 0 && campioneCorrente < segnaleXGlobal.length) { 
+                        disegnaGraficoLinea(ctxSegnaleX, segnaleXCanvas, segnaleXGlobal, '#00c698', campioneCorrente);
+                        disegnaGraficoLinea(ctxSegnaleY, segnaleYCanvas, segnaleYGlobal, '#00a85e', campioneCorrente);
+                     } else if (segnaleXGlobal.length > 0) { // Se campioneCorrente è alla fine (o 0 e traccia completa)
+                        disegnaGraficoLinea(ctxSegnaleX, segnaleXCanvas, segnaleXGlobal, '#00c698', segnaleXGlobal.length -1);
+                        disegnaGraficoLinea(ctxSegnaleY, segnaleYCanvas, segnaleYGlobal, '#00a85e', segnaleYGlobal.length -1);
+                     }
                 }
             });
-            preparaSegnaliEAggiornaInfoLab();
-            if(segnaleXGlobal.length > 0 && !animazioneInPausa) {
-                 idAnimazioneLaboratorio = requestAnimationFrame(loopAnimazioneLab);
+
+            if (modalitaCorrente === 'complesse') {
+                controlliComplesseDiv.style.display = 'flex'; // Usa flex se .riga-controlli-lab è flex
+                controlliLissajousDiv.style.display = 'none';
+            } else {
+                controlliComplesseDiv.style.display = 'none';
+                controlliLissajousDiv.style.display = 'flex';
             }
+            preparaSegnaliEAggiornaUI(); 
+
             return idAnimazioneLaboratorio;
         }
+
 
         window.fermaAnimazioneLaboratorio = function() {
             if (idAnimazioneLaboratorio) {
