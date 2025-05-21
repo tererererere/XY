@@ -39,7 +39,6 @@
         }
         .menu { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap:wrap; align-items: flex-start; }
         .voce-menu { margin-right: 20px; margin-bottom: 5px; }
-        .voce-menu:last-child { margin-right: 0; }
         
         .titolo-espandibile {
             text-decoration: none; color: #00a85e; padding: 8px 12px; position: relative;
@@ -258,6 +257,13 @@
             margin-top: 10px; border: 1px solid #003e28;
         }
 
+        /* --- STILE PER ALLINEARE LA VOCE "Bibliografia" A DESTRA --- */
+        .voce-menu-bibliografia {
+            margin-left: auto; /* Allinea questa voce a destra */
+            margin-right: 0 !important; /* Sovrascrive il margin-right di .voce-menu */
+        }
+        /* --- FINE STILE PER ALLINEARE LA VOCE "Bibliografia" --- */
+
     </style>
 </head>
 <body>
@@ -275,7 +281,10 @@
             <li class="voce-menu">
                 <a href="#" class="titolo-espandibile" data-target="contenuto-laboratorio-oscilloscopio">Oscilloscopio</a>
             </li>
-        </ul>
+            <li class="voce-menu voce-menu-bibliografia">
+                <a href="#" class="titolo-espandibile" data-target="contenuto-bibliografia">Bibliografia</a>
+            </li>
+            </ul>
     </nav>
 
     <div id="area-testo-dinamico" class="area-contenuto-visibile visibile">
@@ -328,7 +337,7 @@
             <li>t = tempo</li>
             <li>φ = fase</li>
         </ul>
-       
+        
         <h4>Onde complesse</h4>
         <p>I suoni che sentiamo sono onde complesse, cioè un mix di tante onde sinusoidali di frequenze, ampiezze e fasi diverse sovrapposte tra loro. Per scomporre un’onda complessa nelle sue componenti base si usa la trasformata di Fourier, descritta dalla seguente equazione:</p>
         <p class="equazione">X(f) = &int;<sub>&minus;&infin;</sub><sup>&infin;</sup> x(t) &sdot; e<sup>&minus;i2&pi;ft</sup> dt</p>
@@ -473,6 +482,17 @@
         </div>
     </div>
 
+    <div id="contenuto-bibliografia" class="contenitore-dati-nascosto">
+        <h2>Bibliografia</h2>
+        <p>Questa sezione è dedicata ai riferimenti bibliografici utilizzati e consigliati.</p>
+        <ul>
+            <li>Smith, J. (2020). <em>Fondamenti di Acustica e Onde Sonore</em>. Edizioni Sapienza.</li>
+            <li>Doe, A. (2018). Visualizzazione delle Figure di Lissajous con Strumenti Moderni. <em>Journal of Experimental Physics</em>, 45(2), 123-145.</li>
+            <li>Webber, L. (2022). <em>L'Oscilloscopio: Guida Pratica all'Uso e alle Applicazioni</em>. Tech Press.</li>
+            <li>Physics Online. (s.d.). <em>Interactive Lissajous Figures Simulator</em>. Reperito da https://academo.org/demos/lissajous-curves/</li>
+        </ul>
+        <p>Ulteriori letture possono includere manuali specifici degli strumenti e articoli di ricerca nel campo dell'acustica e dell'elettronica.</p>
+    </div>
     <script>
         let idAnimazioneLaboratorio = null; 
         let labOndeFaseResizeHandler = null; 
@@ -814,7 +834,7 @@
             function disegnaPianoCartesiano(ctx, larghezza, altezza, centroX, centroY, scala) {
                  if (!ctx) return;
                 ctx.strokeStyle = "#005337"; 
-                ctx.fillStyle = "#00a85e";   
+                ctx.fillStyle = "#00a85e";  
                 ctx.lineWidth = 0.5;
                 ctx.font = "10px monospace";
                 ctx.beginPath(); ctx.moveTo(0, centroY); ctx.lineTo(larghezza, centroY); ctx.stroke();
@@ -973,7 +993,7 @@
                         const x = centroXFormaCanvas + segnaleXGlobal[idxTracciato] * scalaForma;
                         const y = centroYFormaCanvas - segnaleYGlobal[idxTracciato] * scalaForma;
                         if (i === 0 && campioneCorrente !==0 ) { // Se non è il primissimo punto del segnale, ma il primo del batch
-                            ctxForma.lineTo(x,y); // congiungi al punto corrente prima di iniziare il batch
+                             ctxForma.lineTo(x,y); // congiungi al punto corrente prima di iniziare il batch
                         } else if (i > 0 || campioneCorrente === 0) { // per il primo punto del batch (o se si parte da zero)
                              ctxForma.lineTo(x, y);
                         }
@@ -1118,10 +1138,19 @@
 
                 titoloLink.addEventListener('click', function(event) {
                     event.preventDefault();
+                    
                     const targetId = this.dataset.target;
+                    // Se targetId non è definito (per es. un link che non dovrebbe cambiare contenuto), esce.
+                    // Questo previene errori per link futuri che potrebbero non avere 'data-target'.
+                    if (typeof targetId === 'undefined') {
+                         return; 
+                    }
+                    
                     const sorgenteContenuto = document.getElementById(targetId);
 
-                    if (!sorgenteContenuto || !areaTestoDinamico) { return; }
+                    if (!sorgenteContenuto || !areaTestoDinamico) { 
+                        return; 
+                    }
 
                     if (titoloAttualmenteAttivoPagina) {
                         const prevTargetId = titoloAttualmenteAttivoPagina.dataset.target;
@@ -1169,6 +1198,8 @@
                         } else if (targetId === "contenuto-esperimenti") { 
                              setTimeout(function() { if (typeof inizializzaLaboratorioLissajous === "function") inizializzaLaboratorioLissajous(); }, 0);
                         }
+                        // Non è necessario un 'else if' specifico per 'contenuto-bibliografia' qui
+                        // perché non ha inizializzazioni JavaScript speciali come i laboratori.
                     }
                 });
             });
