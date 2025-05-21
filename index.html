@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina XY Interattiva</title>
     <style>
-        /* Reset and Body setup for full height flex layout */
+       
         html {
             height: 100%;
             box-sizing: border-box;
@@ -22,7 +22,6 @@
             padding: 15px; 
         }
 
-        /* Header and Nav flex properties */
         .titolo-pagina-principale, .navigazione-principale {
             flex-shrink: 0; 
         }
@@ -94,13 +93,13 @@
             margin-top: 0.5em; 
             margin-bottom: 1em; 
         }
-        #area-testo-dinamico ul ul { /* Stile per liste annidate */
+        #area-testo-dinamico ul ul { 
              margin-top: 0.3em;
              margin-bottom: 0.3em;
-             list-style-type: circle; /* O altro per distinguerle */
+             list-style-type: circle; 
         }
         #area-testo-dinamico li {
-            margin-bottom: 0.5em; /* Aumentato leggermente per la lista dei componenti */
+            margin-bottom: 0.5em; 
         }
         #area-testo-dinamico p { 
              text-align: justify;
@@ -118,7 +117,6 @@
             overflow-x: auto; 
         }
 
-        /* Styles for the Oscilloscope Lab section */
         #area-testo-dinamico .controlli-forms-container-lab {
             display: flex; flex-direction: column; gap: 15px; /* Increased gap */ padding: 15px; /* Increased padding */
             background-color: #222; border-radius: 5px; border: 1px solid #003e28; margin-bottom: 15px;
@@ -178,7 +176,6 @@
             display: none; transform: translateY(-100%); pointer-events: none;
         }
 
-        /* Stili per Laboratorio Onde con Fase (in Onde Sonore) */
         .lab-fase-container { 
             margin-top: 25px; padding: 15px 0; 
             background-color: #1f1f1f; border-radius: 5px; border: 1px solid #003e28;
@@ -214,7 +211,6 @@
             margin: 0 auto 20px auto; border: 1px solid #005337; 
         }
 
-        /* Stili per Laboratorio Lissajous */
         .lab-lis-wrapper { margin-top: 25px; padding: 0; }
         .lab-lis-container { 
             background-color: #1c1c1c; border-radius: 8px; padding: 25px;
@@ -261,12 +257,10 @@
             color: #00f0a0;
         }
 
-        /* --- STILE PER ALLINEARE LA VOCE "Bibliografia" A DESTRA --- */
         .voce-menu-bibliografia {
-            margin-left: auto; /* Allinea questa voce a destra */
-            margin-right: 0 !important; /* Sovrascrive il margin-right di .voce-menu */
+            margin-left: auto; 
+            margin-right: 0 !important; 
         }
-        /* --- FINE STILE PER ALLINEARE LA VOCE "Bibliografia" --- */
 
     </style>
 </head>
@@ -707,7 +701,6 @@
             }
         };
 
-        // MODIFICHE PRINCIPALI IN QUESTA FUNZIONE
         function inizializzaLaboratorioOscilloscopio() {
             if (idAnimazioneLaboratorio) cancelAnimationFrame(idAnimazioneLaboratorio);
             idAnimazioneLaboratorio = null;
@@ -875,12 +868,12 @@
                     ctxForma.moveTo(xInizio, yInizio);
                     
                     let puntoFinaleTraccia = campioneCorrente;
-                    if (animazioneInPausa) { // Se in pausa, mostra tutta la traccia fino all'ultimo punto o tutta se appena iniziata
+                    if (animazioneInPausa) { 
                          puntoFinaleTraccia = (campioneCorrente === 0 && segnaleXGlobal.length > 0) ? segnaleXGlobal.length : campioneCorrente;
-                         if (campioneCorrente === segnaleXGlobal.length && segnaleXGlobal.length > 0){ // caso in cui si è completato un ciclo e si è in pausa
+                         if (campioneCorrente === segnaleXGlobal.length && segnaleXGlobal.length > 0){ 
                             puntoFinaleTraccia = segnaleXGlobal.length;
                          }
-                    } else if (segnaleXGlobal.length > 0) { // In animazione, mostra fino al punto corrente
+                    } else if (segnaleXGlobal.length > 0) { 
                         puntoFinaleTraccia = campioneCorrente;
                     }
 
@@ -935,14 +928,14 @@
 
                 segnaleXGlobal = segnali.segnaleX;
                 segnaleYGlobal = segnali.segnaleY;
-                campioneCorrente = 0; // Resetta il campione corrente
+                campioneCorrente = 0; 
 
                 aggiornaInfoDisplay();
-                disegnaStatoFormaCorrenteLab(); // Disegna la forma iniziale (o completa se in pausa)
+                disegnaStatoFormaCorrenteLab(); 
                 
                 let indiceCursoreIniziale = 0;
                 if (animazioneInPausa && segnaleXGlobal.length > 0) {
-                    // Se in pausa, posiziona i cursori alla fine o all'inizio a seconda dello stato precedente
+                    
                    indiceCursoreIniziale = (campioneCorrente > 0 && campioneCorrente < segnaleXGlobal.length) ? campioneCorrente : 0; // o segnaleXGlobal.length -1
                 }
 
@@ -973,23 +966,21 @@
                     disegnaPianoCartesiano(ctxForma, formaCanvas.width, formaCanvas.height, centroXFormaCanvas, centroYFormaCanvas, scalaForma);
                 }
 
-                let ultimoCampioneDisegnatoQuestoFrame = campioneCorrente; // Salva il campione corrente prima dell'incremento
+                let ultimoCampioneDisegnatoQuestoFrame = campioneCorrente; 
                 if (segnaleXGlobal.length > 1) {
                     ctxForma.beginPath();
                     ctxForma.strokeStyle = '#00ff99';
                     ctxForma.lineWidth = 1.5;
                     
-                    // Determina il punto di partenza per il disegno del segmento corrente
+                    
                     let idxP1 = campioneCorrente;
-                    // Se campioneCorrente è 0 e stiamo per iniziare, il primo punto è già stato "disegnato" in preparaSegnali o non c'è un segmento precedente
-                    // Se campioneCorrente > 0, idxP1 è il punto precedente.
-                    // Per il primo frame dopo Riparti (se campioneCorrente=0), non c'è un "segmento precedente" da questo loop, quindi moveTo al primo punto.
+                    
 
-                    if (campioneCorrente === 0) { // Inizio tracciamento o loop
+                    if (campioneCorrente === 0) { 
                          const x1 = centroXFormaCanvas + segnaleXGlobal[0] * scalaForma;
                          const y1 = centroYFormaCanvas - segnaleYGlobal[0] * scalaForma;
                          ctxForma.moveTo(x1,y1);
-                    } else { // Continua dal punto precedente
+                    } else { 
                          const xPrev = centroXFormaCanvas + segnaleXGlobal[(campioneCorrente - 1 + segnaleXGlobal.length) % segnaleXGlobal.length] * scalaForma;
                          const yPrev = centroYFormaCanvas - segnaleYGlobal[(campioneCorrente - 1 + segnaleXGlobal.length) % segnaleXGlobal.length] * scalaForma;
                          ctxForma.moveTo(xPrev, yPrev);
@@ -1001,14 +992,14 @@
                         
                         const x = centroXFormaCanvas + segnaleXGlobal[idxTracciato] * scalaForma;
                         const y = centroYFormaCanvas - segnaleYGlobal[idxTracciato] * scalaForma;
-                        if (i === 0 && campioneCorrente !==0 ) { // Se non è il primissimo punto del segnale, ma il primo del batch
-                             ctxForma.lineTo(x,y); // congiungi al punto corrente prima di iniziare il batch
-                        } else if (i > 0 || campioneCorrente === 0) { // per il primo punto del batch (o se si parte da zero)
+                        if (i === 0 && campioneCorrente !==0 ) { 
+                             ctxForma.lineTo(x,y); 
+                        } else if (i > 0 || campioneCorrente === 0) { 
                              ctxForma.lineTo(x, y);
                         }
 
                         ultimoCampioneDisegnatoQuestoFrame = idxTracciato;
-                         if ((campioneCorrente + i +1) >= segnaleXGlobal.length) break; // Esce se si supera la lunghezza
+                         if ((campioneCorrente + i +1) >= segnaleXGlobal.length) break; 
                     }
                     ctxForma.stroke();
                 }
@@ -1040,7 +1031,7 @@
                     controlliComplesseDiv.style.display = 'none';
                     controlliLissajousDiv.style.display = 'block'; 
                 }
-                animazioneInPausa = false; // Resetta lo stato di pausa quando si cambia modalità
+                animazioneInPausa = false; 
                 preparaSegnaliEAggiornaUI();
             });
 
@@ -1079,11 +1070,11 @@
 
             checkboxPianoCartesiano.addEventListener('change', function() {
                 mostraPianoCartesiano = this.checked;
-                 // Ridisegna la forma corrente, specialmente se in pausa
+                 
                 if (!animazioneInPausa) {
-                    // Se l'animazione è in corso, il prossimo frame la ridisegnerà
+                    
                 } else {
-                     disegnaStatoFormaCorrenteLab(); // Ridisegna subito se in pausa
+                     disegnaStatoFormaCorrenteLab(); 
                 }
             });
 
@@ -1149,8 +1140,7 @@
                     event.preventDefault();
                     
                     const targetId = this.dataset.target;
-                    // Se targetId non è definito (per es. un link che non dovrebbe cambiare contenuto), esce.
-                    // Questo previene errori per link futuri che potrebbero non avere 'data-target'.
+                    
                     if (typeof targetId === 'undefined') {
                          return; 
                     }
@@ -1207,8 +1197,7 @@
                         } else if (targetId === "contenuto-esperimenti") { 
                              setTimeout(function() { if (typeof inizializzaLaboratorioLissajous === "function") inizializzaLaboratorioLissajous(); }, 0);
                         }
-                        // Non è necessario un 'else if' specifico per 'contenuto-bibliografia' qui
-                        // perché non ha inizializzazioni JavaScript speciali come i laboratori.
+                        
                     }
                 });
             });
